@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta name="transparent" content="true">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/core-js/3.30.2/minified.js"
+        integrity="sha512-u60H4fcHTGKAVICDO65xbPZn/eTY9S/VkZxMBdfwkCaStJH88PELFskcCVXpAAyVsASRhyiyjP3zEVkFd/3KEA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://proxy.beyondwords.io/npm/@beyondwords/player@0.0.0-beta31/dist/umd.js"></script>
+    <script>
+        var resizeObserver = null
+        function stopResizeObserver() {
+            clearInterval(resizeObserver)
+        }
+        function startResizeObserver() {
+            // TODO @juggle/resize-observer
+            stopResizeObserver()
+            resizeObserver = setInterval(function () {
+                // PlayerViewBridge.onResize(document.documentElement.offsetWidth, document.documentElement.offsetHeight)
+            }, 1000)
+        }
+
+        var player = null
+        function load(settings) {
+            if (settings.showUserInterface !== false) {
+                startResizeObserver()
+            } else {
+                stopResizeObserver()
+                // PlayerViewBridge.onResize(0, 0)
+            }
+
+            if (player !== null) {
+                player.destroy()
+            }
+
+            player = new BeyondWords.Player(Object.assign({}, settings, {
+                target: document.body,
+                downloadFormats: [],
+                widgetStyle: "none",
+            }))
+            player.addEventListener("<any>", function (event) {
+                // PlayerViewBridge.onEvent(
+                //     JSON.stringify(getPlayerEvent(event)),
+                //     JSON.stringify(getPlayerSettings())
+                // )
+            })
+
+            function getPlayerEvent(event) {
+                return {
+                    id: event.id,
+                    type: event.type,
+                    description: event.description,
+                    initiatedBy: event.initiatedBy,
+                    emittedFrom: event.emittedFrom,
+                    status: event.status,
+                    createdAt: event.createdAt,
+                    processedAt: event.processedAt
+                }
+            }
+            function getPlayerSettings() {
+                return {
+                    playerApiUrl: player.playerApiUrl,
+                    projectId: player.projectId,
+                    contentId: player.contentId,
+                    playlistId: player.playlistId,
+                    sourceId: player.sourceId,
+                    sourceUrl: player.sourceUrl,
+                    playlist: player.playlist,
+                    showUserInterface: player.showUserInterface,
+                    playerStyle: player.playerStyle,
+                    playerTitle: player.playerTitle,
+                    callToAction: player.callToAction,
+                    skipButtonStyle: player.skipButtonStyle,
+                    playlistStyle: player.playlistStyle,
+                    playlistToggle: player.playlistToggle,
+                    downloadFormats: player.downloadFormats,
+                    mediaSession: player.mediaSession,
+                    content: player.content,
+                    contentIndex: player.contentIndex,
+                    introsOutros: player.introsOutros,
+                    introsOutrosIndex: player.introsOutrosIndex,
+                    adverts: player.adverts,
+                    advertIndex: player.advertIndex,
+                    persistentAdImage: player.persistentAdImage,
+                    persistentIndex: player.persistentIndex,
+                    duration: player.duration,
+                    currentTime: player.currentTime,
+                    playbackState: player.playbackState,
+                    playbackRate: player.playbackRate,
+                    widgetStyle: player.widgetStyle,
+                    widgetPosition: player.widgetPosition,
+                    widgetWidth: player.widgetWidth,
+                    textColor: player.textColor,
+                    backgroundColor: player.backgroundColor,
+                    iconColor: player.iconColor,
+                    highlightColor: player.highlightColor,
+                    logoIconEnabled: player.logoIconEnabled,
+                    highlightSections: player.highlightSections,
+                    clickableSections: player.clickableSections,
+                    segmentWidgetSections: player.segmentWidgetSections,
+                    segmentWidgetPosition: player.segmentWidgetPosition,
+                    currentSegment: player.currentSegment,
+                    hoveredSegment: player.hoveredSegment,
+                    advertConsent: player.advertConsent,
+                    analyticsConsent: player.analyticsConsent,
+                    analyticsCustomUrl: player.analyticsCustomUrl,
+                    analyticsTag: player.analyticsTag,
+                    transitions: player.transitions,
+                    captureErrors: player.captureErrors
+                }
+            }
+        }
+        function domContentLoaded() {
+            if (document.readyState === "complete" || document.readyState === "interactive") return Promise.resolve()
+            return new Promise(function (resolve) {
+                document.addEventListener("DOMContentLoaded", function () {
+                    resolve()
+                })
+            })
+        }
+        domContentLoaded().then(function () {
+            // PlayerViewBridge.onReady()
+        })
+    </script>
+</head>
+
+<body style="margin: 0;"></body>
+
+</html>
