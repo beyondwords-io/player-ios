@@ -55,10 +55,6 @@ class PlayerView: UIView, WKNavigationDelegate, WKScriptMessageHandler {
         webView.rightAnchor.constraint(equalTo: rightAnchor, constant: 0).isActive = true
     }
     
-    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-        webView.evaluateJavaScript("window.webkit.messageHandlers.iOSBridge.postMessage('trigger from JS');", completionHandler: nil)
-    }
-    
     func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
         if message.name != "iOSBridge" {
             return
