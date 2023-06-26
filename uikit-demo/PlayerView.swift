@@ -16,8 +16,14 @@ class PlayerView: UIView, WKNavigationDelegate, WKScriptMessageHandler {
 #if DEBUG
         webView.isInspectable = true
 #endif
-        let url = URL(string: "https://beyondwords-io.github.io/player-demo/")
-        webView.load(URLRequest(url: url!))
+        guard let playerHTMLPath = Bundle.main.path(forResource: "player", ofType: "html") else {
+            fatalError("player.html not found!")
+        }
+        guard let playerHTMLPage = try? String(contentsOfFile: playerHTMLPath) else {
+            fatalError("player.html could not be loaded!")
+        }
+        let baseURL = URL(string: "https://beyondwords.io")
+        webView.loadHTMLString(playerHTMLPage, baseURL: baseURL)
         return webView;
     }()
     
