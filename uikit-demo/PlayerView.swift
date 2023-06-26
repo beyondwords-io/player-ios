@@ -8,16 +8,16 @@ class PlayerView: UIView, WKNavigationDelegate, WKScriptMessageHandler {
         let contentController = WKUserContentController()
         contentController.add(self, name: "iOSBridge")
         configuration.userContentController = contentController
-        let view = WKWebView(frame: .zero, configuration: configuration)
-        view.navigationDelegate = self
-        view.scrollView.bounces = false
-        view.scrollView.isScrollEnabled = false
+        let webView = WKWebView(frame: .zero, configuration: configuration)
+        webView.navigationDelegate = self
+        webView.scrollView.bounces = false
+        webView.scrollView.isScrollEnabled = false
 #if DEBUG
-        view.isInspectable = true
+        webView.isInspectable = true
 #endif
         let url = URL(string: "https://beyondwords-io.github.io/player-demo/")
-        view.load(URLRequest(url: url!))
-        return view;
+        webView.load(URLRequest(url: url!))
+        return webView;
     }()
     
     override init(frame: CGRect) {
