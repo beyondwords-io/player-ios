@@ -2,6 +2,10 @@ import UIKit
 import WebKit
 
 class PlayerView: UIView, WKNavigationDelegate, WKScriptMessageHandler {
+    struct BridgeMessage: Codable {
+        var type: String
+    }
+    
     private lazy var webView: WKWebView = {
         let configuration = WKWebViewConfiguration()
         configuration.allowsInlineMediaPlayback = true
@@ -25,6 +29,10 @@ class PlayerView: UIView, WKNavigationDelegate, WKScriptMessageHandler {
         let baseURL = URL(string: "https://beyondwords.io")
         webView.loadHTMLString(playerHTMLPage, baseURL: baseURL)
         return webView;
+    }()
+    
+    private lazy var jsonDecoded: JSONDecoder = {
+        return JSONDecoder()
     }()
     
     override init(frame: CGRect) {
@@ -52,8 +60,16 @@ class PlayerView: UIView, WKNavigationDelegate, WKScriptMessageHandler {
     }
     
     func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
-        if message.name == "iOSBridge" {
-            print("Hey", message.body)
+        if message.name != "iOSBridge" {
+            return
         }
+        
+        guard let messageString = message.body as? String,
+              let messageData = messageString.data(using: .utf8),
+              let decodedMessage = try? jsonDecoded.decode(BridgeMessage.self, from: messageData) else {
+            fatalError("Cannot decode iOSBridge message: \(message.body)")
+        }
+        
+        print(decodedMessage)
     }
 }

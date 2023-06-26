@@ -119,7 +119,9 @@
             })
         }
         domContentLoaded().then(function () {
-            // PlayerViewBridge.onReady()
+            window.webkit.messageHandlers.iOSBridge.postMessage(JSON.stringify({
+                type: "ready"
+            }))
         })
     </script>
 </head>
