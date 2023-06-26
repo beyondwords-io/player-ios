@@ -35,6 +35,14 @@ class PlayerView: UIView, WKNavigationDelegate, WKScriptMessageHandler {
         return JSONDecoder()
     }()
     
+    private lazy var jsonEncoder: JSONEncoder = {
+        return JSONEncoder()
+    }()
+    
+    private var pendingCommands: [String] = []
+    
+    private var ready = false
+    
     override init(frame: CGRect) {
         super.init(frame: .zero)
         setup()
@@ -43,16 +51,6 @@ class PlayerView: UIView, WKNavigationDelegate, WKScriptMessageHandler {
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         setup()
-    }
-    
-    private func setup() {
-        webView.translatesAutoresizingMaskIntoConstraints = false
-        addSubview(webView)
-        webView.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        webView.topAnchor.constraint(equalTo: topAnchor, constant: 0).isActive = true
-        webView.leftAnchor.constraint(equalTo: leftAnchor, constant: 0).isActive = true
-        webView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 0).isActive = true
-        webView.rightAnchor.constraint(equalTo: rightAnchor, constant: 0).isActive = true
     }
     
     func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
@@ -66,6 +64,49 @@ class PlayerView: UIView, WKNavigationDelegate, WKScriptMessageHandler {
             fatalError("Cannot decode iOSBridge message: \(message.body)")
         }
         
-        print(decodedMessage)
+        switch (decodedMessage.type) {
+        case "ready":
+            onReady()
+        default:
+            print("Unknown message received from iOSBridge \(decodedMessage.type)")
+        }
+    }
+    
+    public func load(playerSettings: PlayerSettings) {
+        callFunction(name: "load", args: [playerSettings])
+    }
+    
+    private func callFunction(name: String, args: Array<Encodable>) {
+        exec(command: String(
+            format: "%@(%@)",
+            name,
+            args.compactMap { try? jsonEncoder.encode($0) }
+                .compactMap { String(data: $0, encoding: .utf8) }
+                .joined(separator: ",")
+        ))
+    }
+    
+    private func exec(command: String) {
+        if (!ready) {
+            pendingCommands.append(command)
+        } else {
+            webView.evaluateJavaScript(command, completionHandler: nil)
+        }
+    }
+    
+    private func onReady() {
+        ready = true
+        pendingCommands.forEach { exec(command: $0) }
+        pendingCommands.removeAll()
+    }
+    
+    private func setup() {
+        webView.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(webView)
+        webView.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        webView.topAnchor.constraint(equalTo: topAnchor, constant: 0).isActive = true
+        webView.leftAnchor.constraint(equalTo: leftAnchor, constant: 0).isActive = true
+        webView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 0).isActive = true
+        webView.rightAnchor.constraint(equalTo: rightAnchor, constant: 0).isActive = true
     }
 }
