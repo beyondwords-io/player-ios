@@ -5,6 +5,7 @@ class PlayerView: UIView, WKNavigationDelegate, WKScriptMessageHandler {
     private lazy var webView: WKWebView = {
         let configuration = WKWebViewConfiguration()
         configuration.allowsInlineMediaPlayback = true
+        configuration.mediaTypesRequiringUserActionForPlayback = .all
         let contentController = WKUserContentController()
         contentController.add(self, name: "iOSBridge")
         configuration.userContentController = contentController
