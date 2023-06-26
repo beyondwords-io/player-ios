@@ -39,10 +39,11 @@
                 widgetStyle: "none",
             }))
             player.addEventListener("<any>", function (event) {
-                // PlayerViewBridge.onEvent(
-                //     JSON.stringify(getPlayerEvent(event)),
-                //     JSON.stringify(getPlayerSettings())
-                // )
+                window.webkit.messageHandlers.iOSBridge.postMessage(JSON.stringify({
+                    type: "event",
+                    event: getPlayerEvent(event),
+                    settings: getPlayerSettings()
+                }))
             })
 
             function getPlayerEvent(event) {

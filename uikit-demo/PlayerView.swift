@@ -4,6 +4,8 @@ import WebKit
 class PlayerView: UIView, WKNavigationDelegate, WKScriptMessageHandler {
     struct BridgeMessage: Codable {
         var type: String
+        var event: PlayerEvent? = nil
+        var settings: PlayerSettings? = nil
     }
     
     private lazy var webView: WKWebView = {
@@ -67,6 +69,8 @@ class PlayerView: UIView, WKNavigationDelegate, WKScriptMessageHandler {
         switch (decodedMessage.type) {
         case "ready":
             onReady()
+        case "event":
+            onEvent(event: decodedMessage.event!, settings: decodedMessage.settings!)
         default:
             print("Unknown message received from iOSBridge \(decodedMessage.type)")
         }
@@ -98,6 +102,10 @@ class PlayerView: UIView, WKNavigationDelegate, WKScriptMessageHandler {
         ready = true
         pendingCommands.forEach { exec(command: $0) }
         pendingCommands.removeAll()
+    }
+    
+    private func onEvent(event: PlayerEvent, settings: PlayerSettings) {
+        print("HII \(event) \(settings)")
     }
     
     private func setup() {
