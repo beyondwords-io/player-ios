@@ -1,19 +1,32 @@
 import UIKit
 import WebKit
 
-class PlayerView: UIView, WKNavigationDelegate, WKScriptMessageHandler {
-    struct BridgeMessage: Codable {
-        var type: String
-        var event: PlayerEvent? = nil
-        var settings: PlayerSettings? = nil
+fileprivate struct BridgeMessage: Codable {
+    var type: String
+    var event: PlayerEvent? = nil
+    var settings: PlayerSettings? = nil
+}
+
+fileprivate class WeakWKScriptMessageHandler : NSObject, WKScriptMessageHandler {
+    weak var delegate : WKScriptMessageHandler?
+    
+    init(delegate:WKScriptMessageHandler) {
+        self.delegate = delegate
+        super.init()
     }
     
+    func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
+        self.delegate?.userContentController(userContentController, didReceive: message)
+    }
+}
+
+class PlayerView: UIView, WKNavigationDelegate, WKScriptMessageHandler {
     private lazy var webView: WKWebView = {
         let configuration = WKWebViewConfiguration()
         configuration.allowsInlineMediaPlayback = true
         configuration.mediaTypesRequiringUserActionForPlayback = .all
         let contentController = WKUserContentController()
-        contentController.add(self, name: "iOSBridge")
+        contentController.add(WeakWKScriptMessageHandler(delegate: self), name: "iOSBridge")
         configuration.userContentController = contentController
         let webView = WKWebView(frame: .zero, configuration: configuration)
         webView.navigationDelegate = self
