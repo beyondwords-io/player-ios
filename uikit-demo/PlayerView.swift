@@ -10,7 +10,7 @@ fileprivate struct BridgeMessage: Codable {
 fileprivate class WeakWKScriptMessageHandler : NSObject, WKScriptMessageHandler {
     weak var delegate : WKScriptMessageHandler?
     
-    init(delegate:WKScriptMessageHandler) {
+    init(delegate: WKScriptMessageHandler) {
         self.delegate = delegate
         super.init()
     }
@@ -46,13 +46,9 @@ class PlayerView: UIView, WKNavigationDelegate, WKScriptMessageHandler {
         return webView;
     }()
     
-    private lazy var jsonDecoded: JSONDecoder = {
-        return JSONDecoder()
-    }()
+    private let jsonDecoded = JSONDecoder()
     
-    private lazy var jsonEncoder: JSONEncoder = {
-        return JSONEncoder()
-    }()
+    private let jsonEncoder = JSONEncoder()
     
     private var pendingCommands: [String] = []
     
@@ -60,12 +56,12 @@ class PlayerView: UIView, WKNavigationDelegate, WKScriptMessageHandler {
     
     override init(frame: CGRect) {
         super.init(frame: .zero)
-        setup()
+        commonInit()
     }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        setup()
+        commonInit()
     }
     
     func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
@@ -89,12 +85,40 @@ class PlayerView: UIView, WKNavigationDelegate, WKScriptMessageHandler {
         }
     }
     
-    public func load(playerSettings: PlayerSettings) {
-        callFunction(name: "load", args: [playerSettings])
+    public func load(_ playerSettings: PlayerSettings) {
+        callFunction("load", args: [playerSettings])
     }
     
-    private func callFunction(name: String, args: Array<Encodable>) {
-        exec(command: String(
+    private func commonInit() {
+        webView.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(webView)
+        webView.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        webView.topAnchor.constraint(equalTo: topAnchor, constant: 0).isActive = true
+        webView.leftAnchor.constraint(equalTo: leftAnchor, constant: 0).isActive = true
+        webView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 0).isActive = true
+        webView.rightAnchor.constraint(equalTo: rightAnchor, constant: 0).isActive = true
+    }
+    
+    private func onReady() {
+        ready = true
+        pendingCommands.forEach { exec($0) }
+        pendingCommands.removeAll()
+    }
+    
+    private func onResize() {
+        // TODO
+    }
+    
+    private func onEvent(event: PlayerEvent, settings: PlayerSettings) {
+        print("HII \(event) \(settings)")
+    }
+    
+    private func setProp(_ name: String, value: Encodable) {
+        // TODO
+    }
+    
+    private func callFunction(_ name: String, args: Array<Encodable>) {
+        exec(String(
             format: "%@(%@)",
             name,
             args.compactMap { try? jsonEncoder.encode($0) }
@@ -103,31 +127,11 @@ class PlayerView: UIView, WKNavigationDelegate, WKScriptMessageHandler {
         ))
     }
     
-    private func exec(command: String) {
+    private func exec(_ command: String) {
         if (!ready) {
             pendingCommands.append(command)
         } else {
             webView.evaluateJavaScript(command, completionHandler: nil)
         }
-    }
-    
-    private func onReady() {
-        ready = true
-        pendingCommands.forEach { exec(command: $0) }
-        pendingCommands.removeAll()
-    }
-    
-    private func onEvent(event: PlayerEvent, settings: PlayerSettings) {
-        print("HII \(event) \(settings)")
-    }
-    
-    private func setup() {
-        webView.translatesAutoresizingMaskIntoConstraints = false
-        addSubview(webView)
-        webView.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        webView.topAnchor.constraint(equalTo: topAnchor, constant: 0).isActive = true
-        webView.leftAnchor.constraint(equalTo: leftAnchor, constant: 0).isActive = true
-        webView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 0).isActive = true
-        webView.rightAnchor.constraint(equalTo: rightAnchor, constant: 0).isActive = true
     }
 }
