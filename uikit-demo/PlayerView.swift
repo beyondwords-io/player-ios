@@ -5,6 +5,8 @@ fileprivate struct BridgeMessage: Codable {
     var type: String
     var event: PlayerEvent? = nil
     var settings: PlayerSettings? = nil
+    var width: Int? = nil
+    var height: Int? = nil
 }
 
 fileprivate class WeakWKScriptMessageHandler : NSObject, WKScriptMessageHandler {
@@ -21,7 +23,10 @@ fileprivate class WeakWKScriptMessageHandler : NSObject, WKScriptMessageHandler 
 }
 
 class PlayerView: UIView, WKNavigationDelegate, WKScriptMessageHandler {
-    private lazy var webView: WKWebView = {
+    private lazy var webViewContainer = {
+        UIView()
+    }()
+    private lazy var webView = {
         let configuration = WKWebViewConfiguration()
         configuration.allowsInlineMediaPlayback = true
         configuration.mediaTypesRequiringUserActionForPlayback = .all
@@ -44,6 +49,12 @@ class PlayerView: UIView, WKNavigationDelegate, WKScriptMessageHandler {
         let baseURL = URL(string: "https://beyondwords.io")
         webView.loadHTMLString(playerHTMLPage, baseURL: baseURL)
         return webView;
+    }()
+    
+    private lazy var webViewContainerHeightConstraint = {
+        let heightConstraint = webViewContainer.heightAnchor.constraint(equalToConstant: 0)
+        heightConstraint.isActive = true
+        return heightConstraint
     }()
     
     private let jsonDecoded = JSONDecoder()
@@ -78,6 +89,8 @@ class PlayerView: UIView, WKNavigationDelegate, WKScriptMessageHandler {
         switch (decodedMessage.type) {
         case "ready":
             onReady()
+        case "resize":
+            onResize(width: decodedMessage.width!, height: decodedMessage.height!)
         case "event":
             onEvent(event: decodedMessage.event!, settings: decodedMessage.settings!)
         default:
@@ -90,13 +103,24 @@ class PlayerView: UIView, WKNavigationDelegate, WKScriptMessageHandler {
     }
     
     private func commonInit() {
+        clipsToBounds = true
+        
+        webViewContainer.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(webViewContainer)
+        webViewContainer.topAnchor.constraint(equalTo: topAnchor).isActive = true
+        webViewContainer.leftAnchor.constraint(equalTo: leftAnchor).isActive = true
+        webViewContainer.rightAnchor.constraint(equalTo: rightAnchor).isActive = true
+        
+        let heightConstraint = heightAnchor.constraint(equalTo: webViewContainer.heightAnchor)
+        heightConstraint.priority = .defaultLow
+        heightConstraint.isActive = true
+        
         webView.translatesAutoresizingMaskIntoConstraints = false
-        addSubview(webView)
-        webView.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        webView.topAnchor.constraint(equalTo: topAnchor, constant: 0).isActive = true
-        webView.leftAnchor.constraint(equalTo: leftAnchor, constant: 0).isActive = true
-        webView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 0).isActive = true
-        webView.rightAnchor.constraint(equalTo: rightAnchor, constant: 0).isActive = true
+        webViewContainer.addSubview(webView)
+        webView.topAnchor.constraint(equalTo: webViewContainer.topAnchor).isActive = true
+        webView.leftAnchor.constraint(equalTo: webViewContainer.leftAnchor).isActive = true
+        webView.rightAnchor.constraint(equalTo: webViewContainer.rightAnchor).isActive = true
+        webView.bottomAnchor.constraint(equalTo: webViewContainer.bottomAnchor).isActive = true
     }
     
     private func onReady() {
@@ -105,8 +129,8 @@ class PlayerView: UIView, WKNavigationDelegate, WKScriptMessageHandler {
         pendingCommands.removeAll()
     }
     
-    private func onResize() {
-        // TODO
+    private func onResize(width: Int, height: Int) {
+        webViewContainerHeightConstraint.constant = CGFloat(height)
     }
     
     private func onEvent(event: PlayerEvent, settings: PlayerSettings) {
