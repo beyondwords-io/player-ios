@@ -102,6 +102,10 @@ class PlayerView: UIView, WKNavigationDelegate, WKScriptMessageHandler {
         callFunction("load", args: [playerSettings])
     }
     
+    public func setPlayerStyle(_ playerStyle: String) {
+        setProp("playerStyle", value: playerStyle)
+    }
+    
     private func commonInit() {
         clipsToBounds = true
         
@@ -138,16 +142,25 @@ class PlayerView: UIView, WKNavigationDelegate, WKScriptMessageHandler {
     }
     
     private func setProp(_ name: String, value: Encodable) {
-        // TODO
+        guard let encodedValue = try? jsonEncoder.encode(value) else { return }
+        guard let encodedStringValue = String(data: encodedValue, encoding: .utf8) else { return }
+        exec(String(
+            format: "%@ = %@",
+            name,
+            encodedStringValue
+        ))
     }
     
     private func callFunction(_ name: String, args: Array<Encodable>) {
+        guard let encodedArgs = try? args.map({ try jsonEncoder.encode($0) }) else { return }
+        guard let encodedStringArgs = try? encodedArgs.map({
+            guard let encodedStringArg = String(data: $0, encoding: .utf8) else { throw NSError() }
+            return encodedStringArg
+        }) else { return }
         exec(String(
             format: "%@(%@)",
             name,
-            args.compactMap { try? jsonEncoder.encode($0) }
-                .compactMap { String(data: $0, encoding: .utf8) }
-                .joined(separator: ",")
+            encodedStringArgs.joined(separator: ",")
         ))
     }
     
