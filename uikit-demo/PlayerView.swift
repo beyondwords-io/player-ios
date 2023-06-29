@@ -138,7 +138,7 @@ class PlayerView: UIView, WKNavigationDelegate, WKScriptMessageHandler {
     }
     
     private func onEvent(event: PlayerEvent, settings: PlayerSettings) {
-        print("HII \(event) \(settings)")
+        print("onEvent \(event) \(settings)")
     }
     
     private func setProp(_ name: String, value: Encodable) {
