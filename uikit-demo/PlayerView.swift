@@ -103,7 +103,7 @@ class PlayerView: UIView, WKNavigationDelegate, WKScriptMessageHandler {
     }
     
     public func setPlayerStyle(_ playerStyle: String) {
-        setProp("playerStyle", value: playerStyle)
+        setProp("player.playerStyle", value: playerStyle)
     }
     
     private func commonInit() {
@@ -168,7 +168,11 @@ class PlayerView: UIView, WKNavigationDelegate, WKScriptMessageHandler {
         if (!ready) {
             pendingCommands.append(command)
         } else {
-            webView.evaluateJavaScript(command, completionHandler: nil)
+            webView.evaluateJavaScript(command) { (result, error) in
+                if let error {
+                    print("PlayerView:exec: \(error)")
+                }
+            }
         }
     }
 }
