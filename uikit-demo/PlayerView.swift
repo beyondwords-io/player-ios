@@ -1,28 +1,7 @@
 import UIKit
 import WebKit
 
-fileprivate struct BridgeMessage: Codable {
-    var type: String
-    var event: PlayerEvent? = nil
-    var settings: PlayerSettings? = nil
-    var width: Int? = nil
-    var height: Int? = nil
-}
-
-fileprivate class WeakWKScriptMessageHandler : NSObject, WKScriptMessageHandler {
-    weak var delegate : WKScriptMessageHandler?
-    
-    init(delegate: WKScriptMessageHandler) {
-        self.delegate = delegate
-        super.init()
-    }
-    
-    func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
-        self.delegate?.userContentController(userContentController, didReceive: message)
-    }
-}
-
-public class PlayerView: UIView, WKScriptMessageHandler {
+public class PlayerView: UIView {
     
     public weak var delegate: PlayerDelegate?
     
@@ -35,7 +14,7 @@ public class PlayerView: UIView, WKScriptMessageHandler {
         configuration.allowsInlineMediaPlayback = true
         configuration.mediaTypesRequiringUserActionForPlayback = .all
         let contentController = WKUserContentController()
-        contentController.add(WeakWKScriptMessageHandler(delegate: self), name: "iOSBridge")
+        contentController.add(bridge, name: bridge.name)
         configuration.userContentController = contentController
         let webView = WKWebView(frame: .zero, configuration: configuration)
         webView.scrollView.bounces = false
@@ -60,7 +39,11 @@ public class PlayerView: UIView, WKScriptMessageHandler {
         return heightConstraint
     }()
     
-    private let jsonDecoded = JSONDecoder()
+    private lazy var bridge = {
+        let bridge = Bridge("iOSBridge")
+        bridge.delegate = self
+        return bridge
+    }()
     
     private let jsonEncoder = JSONEncoder()
     
@@ -78,35 +61,8 @@ public class PlayerView: UIView, WKScriptMessageHandler {
         commonInit()
     }
     
-    public func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
-        if message.name != "iOSBridge" {
-            return
-        }
-        
-        guard let messageString = message.body as? String,
-              let messageData = messageString.data(using: .utf8),
-              let decodedMessage = try? jsonDecoded.decode(BridgeMessage.self, from: messageData) else {
-            fatalError("Cannot decode iOSBridge message: \(message.body)")
-        }
-        
-        switch (decodedMessage.type) {
-        case "ready":
-            onReady()
-        case "resize":
-            onResize(width: decodedMessage.width!, height: decodedMessage.height!)
-        case "event":
-            onEvent(event: decodedMessage.event!, settings: decodedMessage.settings!)
-        default:
-            print("Unknown message received from iOSBridge \(decodedMessage.type)")
-        }
-    }
-    
-    public func load(_ playerSettings: PlayerSettings) {
-        callFunction("load", args: [playerSettings])
-    }
-    
-    public func setPlayerStyle(_ playerStyle: String) {
-        setProp("player.playerStyle", value: playerStyle)
+    deinit {
+        webView.stopLoading()
     }
     
     private func commonInit() {
@@ -177,5 +133,32 @@ public class PlayerView: UIView, WKScriptMessageHandler {
                 }
             }
         }
+    }
+}
+
+extension PlayerView : BridgeDelegate {
+    func bridge(_ bridge: Bridge, onMessage message: BridgeMessage) {
+        if (self.bridge != bridge) { return }
+        
+        switch (message.type) {
+        case "ready":
+            onReady()
+        case "resize":
+            onResize(width: message.width!, height: message.height!)
+        case "event":
+            onEvent(event: message.event!, settings: message.settings!)
+        default:
+            print("Unknown message received from iOSBridge \(message.type)")
+        }
+    }
+}
+
+extension PlayerView {
+    public func load(_ playerSettings: PlayerSettings) {
+        callFunction("load", args: [playerSettings])
+    }
+    
+    public func setPlayerStyle(_ playerStyle: String) {
+        setProp("player.playerStyle", value: playerStyle)
     }
 }
