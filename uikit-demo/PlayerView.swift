@@ -22,10 +22,14 @@ fileprivate class WeakWKScriptMessageHandler : NSObject, WKScriptMessageHandler 
     }
 }
 
-class PlayerView: UIView, WKNavigationDelegate, WKScriptMessageHandler {
+public class PlayerView: UIView, WKNavigationDelegate, WKScriptMessageHandler {
+    
+    public weak var delegate: PlayerDelegate?
+    
     private lazy var webViewContainer = {
         UIView()
     }()
+    
     private lazy var webView = {
         let configuration = WKWebViewConfiguration()
         configuration.allowsInlineMediaPlayback = true
@@ -75,7 +79,7 @@ class PlayerView: UIView, WKNavigationDelegate, WKScriptMessageHandler {
         commonInit()
     }
     
-    func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
+    public func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
         if message.name != "iOSBridge" {
             return
         }
@@ -138,7 +142,7 @@ class PlayerView: UIView, WKNavigationDelegate, WKScriptMessageHandler {
     }
     
     private func onEvent(event: PlayerEvent, settings: PlayerSettings) {
-        print("onEvent \(event) \(settings)")
+        delegate?.player(self, onEvent: event, settings: settings)
     }
     
     private func setProp(_ name: String, value: Encodable) {

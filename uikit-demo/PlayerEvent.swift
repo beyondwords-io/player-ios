@@ -1,4 +1,4 @@
-struct PlayerEvent: Codable {
+public struct PlayerEvent: Codable {
     var id: String
     var type: String
     var description: String
