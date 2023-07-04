@@ -22,7 +22,7 @@ fileprivate class WeakWKScriptMessageHandler : NSObject, WKScriptMessageHandler 
     }
 }
 
-public class PlayerView: UIView, WKNavigationDelegate, WKScriptMessageHandler {
+public class PlayerView: UIView, WKScriptMessageHandler {
     
     public weak var delegate: PlayerDelegate?
     
@@ -38,7 +38,6 @@ public class PlayerView: UIView, WKNavigationDelegate, WKScriptMessageHandler {
         contentController.add(WeakWKScriptMessageHandler(delegate: self), name: "iOSBridge")
         configuration.userContentController = contentController
         let webView = WKWebView(frame: .zero, configuration: configuration)
-        webView.navigationDelegate = self
         webView.scrollView.bounces = false
         webView.scrollView.isScrollEnabled = false
 #if DEBUG
