@@ -13,14 +13,6 @@
 		F8174F042A445A4D00B027E1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F8174F022A445A4D00B027E1 /* Main.storyboard */; };
 		F8174F062A445A4F00B027E1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F8174F052A445A4F00B027E1 /* Assets.xcassets */; };
 		F8174F092A445A4F00B027E1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F8174F072A445A4F00B027E1 /* LaunchScreen.storyboard */; };
-		F8174F132A45D89F00B027E1 /* PlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8174F122A45D89F00B027E1 /* PlayerView.swift */; };
-		F88CF8492A5402590094EC29 /* PlayerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F88CF8482A5402590094EC29 /* PlayerDelegate.swift */; };
-		F88CF84B2A540D570094EC29 /* Bridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = F88CF84A2A540D570094EC29 /* Bridge.swift */; };
-		F88CF84D2A540D890094EC29 /* BridgeMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F88CF84C2A540D890094EC29 /* BridgeMessage.swift */; };
-		F88CF8502A540DF20094EC29 /* BridgeDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F88CF84F2A540DF20094EC29 /* BridgeDelegate.swift */; };
-		F8BA4D622A49AAA200D67398 /* player.html in Resources */ = {isa = PBXBuildFile; fileRef = F8BA4D612A49AAA200D67398 /* player.html */; };
-		F8BA4D642A49D01B00D67398 /* PlayerSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8BA4D632A49D01B00D67398 /* PlayerSettings.swift */; };
-		F8BA4D662A49DC8B00D67398 /* PlayerEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8BA4D652A49DC8B00D67398 /* PlayerEvent.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,14 +24,6 @@
 		F8174F052A445A4F00B027E1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F8174F082A445A4F00B027E1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		F8174F0A2A445A4F00B027E1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		F8174F122A45D89F00B027E1 /* PlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerView.swift; sourceTree = "<group>"; };
-		F88CF8482A5402590094EC29 /* PlayerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerDelegate.swift; sourceTree = "<group>"; };
-		F88CF84A2A540D570094EC29 /* Bridge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bridge.swift; sourceTree = "<group>"; };
-		F88CF84C2A540D890094EC29 /* BridgeMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BridgeMessage.swift; sourceTree = "<group>"; };
-		F88CF84F2A540DF20094EC29 /* BridgeDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BridgeDelegate.swift; sourceTree = "<group>"; };
-		F8BA4D612A49AAA200D67398 /* player.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = player.html; sourceTree = "<group>"; };
-		F8BA4D632A49D01B00D67398 /* PlayerSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerSettings.swift; sourceTree = "<group>"; };
-		F8BA4D652A49DC8B00D67398 /* PlayerEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerEvent.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,7 +56,6 @@
 		F8174EFB2A445A4D00B027E1 /* uikit-demo */ = {
 			isa = PBXGroup;
 			children = (
-				F88CF84E2A540DDC0094EC29 /* bridge */,
 				F8174EFC2A445A4D00B027E1 /* AppDelegate.swift */,
 				F8174EFE2A445A4D00B027E1 /* SceneDelegate.swift */,
 				F8174F002A445A4D00B027E1 /* ViewController.swift */,
@@ -80,23 +63,8 @@
 				F8174F052A445A4F00B027E1 /* Assets.xcassets */,
 				F8174F072A445A4F00B027E1 /* LaunchScreen.storyboard */,
 				F8174F0A2A445A4F00B027E1 /* Info.plist */,
-				F8174F122A45D89F00B027E1 /* PlayerView.swift */,
-				F88CF8482A5402590094EC29 /* PlayerDelegate.swift */,
-				F8BA4D612A49AAA200D67398 /* player.html */,
-				F8BA4D632A49D01B00D67398 /* PlayerSettings.swift */,
-				F8BA4D652A49DC8B00D67398 /* PlayerEvent.swift */,
 			);
 			path = "uikit-demo";
-			sourceTree = "<group>";
-		};
-		F88CF84E2A540DDC0094EC29 /* bridge */ = {
-			isa = PBXGroup;
-			children = (
-				F88CF84A2A540D570094EC29 /* Bridge.swift */,
-				F88CF84C2A540D890094EC29 /* BridgeMessage.swift */,
-				F88CF84F2A540DF20094EC29 /* BridgeDelegate.swift */,
-			);
-			path = bridge;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -160,7 +128,6 @@
 				F8174F092A445A4F00B027E1 /* LaunchScreen.storyboard in Resources */,
 				F8174F062A445A4F00B027E1 /* Assets.xcassets in Resources */,
 				F8174F042A445A4D00B027E1 /* Main.storyboard in Resources */,
-				F8BA4D622A49AAA200D67398 /* player.html in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -174,13 +141,6 @@
 				F8174F012A445A4D00B027E1 /* ViewController.swift in Sources */,
 				F8174EFD2A445A4D00B027E1 /* AppDelegate.swift in Sources */,
 				F8174EFF2A445A4D00B027E1 /* SceneDelegate.swift in Sources */,
-				F88CF84D2A540D890094EC29 /* BridgeMessage.swift in Sources */,
-				F8BA4D662A49DC8B00D67398 /* PlayerEvent.swift in Sources */,
-				F8174F132A45D89F00B027E1 /* PlayerView.swift in Sources */,
-				F8BA4D642A49D01B00D67398 /* PlayerSettings.swift in Sources */,
-				F88CF8502A540DF20094EC29 /* BridgeDelegate.swift in Sources */,
-				F88CF8492A5402590094EC29 /* PlayerDelegate.swift in Sources */,
-				F88CF84B2A540D570094EC29 /* Bridge.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

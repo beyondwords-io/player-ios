@@ -1,3 +1,10 @@
+//
+//  PlayerEvent.swift
+//  player
+//
+//  Created by Nikola Hristov on 6.07.23.
+//
+
 public struct PlayerEvent: Codable {
     var id: String
     var type: String

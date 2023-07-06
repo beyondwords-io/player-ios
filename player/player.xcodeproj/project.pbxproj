@@ -8,11 +8,27 @@
 
 /* Begin PBXBuildFile section */
 		F88CF8752A56D76C0094EC29 /* player.h in Headers */ = {isa = PBXBuildFile; fileRef = F88CF8742A56D76C0094EC29 /* player.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F88CF87C2A56DD3C0094EC29 /* BridgeDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F88CF87B2A56DD3C0094EC29 /* BridgeDelegate.swift */; };
+		F88CF87E2A56DD640094EC29 /* Bridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = F88CF87D2A56DD640094EC29 /* Bridge.swift */; };
+		F88CF8802A56DD7B0094EC29 /* BridgeMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F88CF87F2A56DD7B0094EC29 /* BridgeMessage.swift */; };
+		F88CF8822A56DDAD0094EC29 /* PlayerEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = F88CF8812A56DDAD0094EC29 /* PlayerEvent.swift */; };
+		F88CF8842A56DDD90094EC29 /* PlayerSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = F88CF8832A56DDD90094EC29 /* PlayerSettings.swift */; };
+		F88CF8862A56DE020094EC29 /* PlayerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F88CF8852A56DE020094EC29 /* PlayerDelegate.swift */; };
+		F88CF8882A56DE190094EC29 /* PlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F88CF8872A56DE190094EC29 /* PlayerView.swift */; };
+		F88CF88A2A56DEA10094EC29 /* player.html in Resources */ = {isa = PBXBuildFile; fileRef = F88CF8892A56DEA10094EC29 /* player.html */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		F88CF8712A56D76C0094EC29 /* player.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = player.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F88CF8742A56D76C0094EC29 /* player.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = player.h; sourceTree = "<group>"; };
+		F88CF87B2A56DD3C0094EC29 /* BridgeDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BridgeDelegate.swift; sourceTree = "<group>"; };
+		F88CF87D2A56DD640094EC29 /* Bridge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bridge.swift; sourceTree = "<group>"; };
+		F88CF87F2A56DD7B0094EC29 /* BridgeMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BridgeMessage.swift; sourceTree = "<group>"; };
+		F88CF8812A56DDAD0094EC29 /* PlayerEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerEvent.swift; sourceTree = "<group>"; };
+		F88CF8832A56DDD90094EC29 /* PlayerSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerSettings.swift; sourceTree = "<group>"; };
+		F88CF8852A56DE020094EC29 /* PlayerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerDelegate.swift; sourceTree = "<group>"; };
+		F88CF8872A56DE190094EC29 /* PlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerView.swift; sourceTree = "<group>"; };
+		F88CF8892A56DEA10094EC29 /* player.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = player.html; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -46,6 +62,14 @@
 			isa = PBXGroup;
 			children = (
 				F88CF8742A56D76C0094EC29 /* player.h */,
+				F88CF87B2A56DD3C0094EC29 /* BridgeDelegate.swift */,
+				F88CF87D2A56DD640094EC29 /* Bridge.swift */,
+				F88CF87F2A56DD7B0094EC29 /* BridgeMessage.swift */,
+				F88CF8812A56DDAD0094EC29 /* PlayerEvent.swift */,
+				F88CF8832A56DDD90094EC29 /* PlayerSettings.swift */,
+				F88CF8852A56DE020094EC29 /* PlayerDelegate.swift */,
+				F88CF8872A56DE190094EC29 /* PlayerView.swift */,
+				F88CF8892A56DEA10094EC29 /* player.html */,
 			);
 			path = player;
 			sourceTree = "<group>";
@@ -93,6 +117,7 @@
 				TargetAttributes = {
 					F88CF8702A56D76C0094EC29 = {
 						CreatedOnToolsVersion = 14.3.1;
+						LastSwiftMigration = 1430;
 					};
 				};
 			};
@@ -119,6 +144,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F88CF88A2A56DEA10094EC29 /* player.html in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -129,6 +155,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F88CF8802A56DD7B0094EC29 /* BridgeMessage.swift in Sources */,
+				F88CF87E2A56DD640094EC29 /* Bridge.swift in Sources */,
+				F88CF8882A56DE190094EC29 /* PlayerView.swift in Sources */,
+				F88CF87C2A56DD3C0094EC29 /* BridgeDelegate.swift in Sources */,
+				F88CF8822A56DDAD0094EC29 /* PlayerEvent.swift in Sources */,
+				F88CF8842A56DDD90094EC29 /* PlayerSettings.swift in Sources */,
+				F88CF8862A56DE020094EC29 /* PlayerDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -258,6 +291,7 @@
 		F88CF8792A56D76C0094EC29 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
@@ -281,6 +315,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -289,6 +324,7 @@
 		F88CF87A2A56D76C0094EC29 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;

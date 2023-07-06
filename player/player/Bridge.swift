@@ -1,3 +1,10 @@
+//
+//  Bridge.swift
+//  player
+//
+//  Created by Nikola Hristov on 6.07.23.
+//
+
 import WebKit
 
 class Bridge : NSObject {

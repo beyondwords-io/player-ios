@@ -1,3 +1,10 @@
+//
+//  PlayerSettings.swift
+//  player
+//
+//  Created by Nikola Hristov on 6.07.23.
+//
+
 public struct PlayerSettings: Codable {
     var playerApiUrl: String? = nil
     var projectId: Int? = nil
