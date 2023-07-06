@@ -47,14 +47,16 @@ public struct PlayerSettings: Codable {
     
     public struct Media: Codable {
         var id: Int? = nil
-        var url: String
+        var url: String? = nil
         var contentType: String? = nil
     }
     
     public struct Segment : Codable {
-        var marker: String
-        var section: String
-        var startTime: Float
+        var segmentIndex: Int? = nil
+        var contentIndex: Int? = nil
+        var marker: String? = nil
+        var section: String? = nil
+        var startTime: Float? = nil
         var duration: Float? = nil
     }
     
@@ -71,7 +73,7 @@ public struct PlayerSettings: Codable {
     }
     
     public struct IntroOutro: Codable{
-        var placement: String
+        var placement: String? = nil
         var media: [Media]? = nil
     }
     
