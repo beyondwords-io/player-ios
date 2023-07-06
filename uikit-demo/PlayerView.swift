@@ -159,7 +159,143 @@ extension PlayerView {
         callFunction("load", args: [playerSettings])
     }
     
+    public func setPlayerApiUrl(_ playerApiUrl: String) {
+        setProp("player.playerApiUrl", value: playerApiUrl)
+    }
+    
+    public func setProjectId(_ projectId: Int) {
+        setProp("player.projectId", value: projectId)
+    }
+    
+    public func setContentId(_ contentId: String) {
+        setProp("player.contentId", value: contentId)
+    }
+    
+    public func setPlaylistId(_ playlistId: Int) {
+        setProp("player.playlistId", value: playlistId)
+    }
+    
+    public func setSourceId(_ sourceId: String) {
+        setProp("player.sourceId", value: sourceId)
+    }
+    
+    public func setSourceUrl(_ sourceUrl: String) {
+        setProp("player.sourceUrl", value: sourceUrl)
+    }
+    
+    public func setPlaylist(_ playlist: [PlayerSettings.Identifier]) {
+        setProp("player.playlist", value: playlist)
+    }
+    
+    public func setShowUserInterface(_ showUserInterface: Bool) {
+        setProp("player.showUserInterface", value: showUserInterface)
+    }
+    
     public func setPlayerStyle(_ playerStyle: String) {
         setProp("player.playerStyle", value: playerStyle)
+    }
+    
+    public func setPlayerTitle(_ playerTitle: String) {
+        setProp("player.playerTitle", value: playerTitle)
+    }
+    
+    public func setCallToAction(_ callToAction: String) {
+        setProp("player.callToAction", value: callToAction)
+    }
+    
+    public func setSkipButtonStyle(_ skipButtonStyle: String) {
+        setProp("player.skipButtonStyle", value: skipButtonStyle)
+    }
+    
+    public func setPlaylistStyle(_ playlistStyle: String) {
+        setProp("player.playlistStyle", value: playlistStyle)
+    }
+    
+    public func setPlaylistToggle(_ playlistToggle: String) {
+        setProp("player.playlistToggle", value: playlistToggle)
+    }
+    
+    public func setMediaSession(_ mediaSession: String) {
+        setProp("player.mediaSession", value: mediaSession)
+    }
+    
+    public func setContent(_ content: [PlayerSettings.Content]) {
+        setProp("player.content", value: content)
+    }
+    
+    public func setContentIndex(_ contentIndex: Int) {
+        setProp("player.contentIndex", value: contentIndex)
+    }
+    
+    public func setIntrosOutros(_ introsOutros: [PlayerSettings.IntroOutro]) {
+        setProp("player.introsOutros", value: introsOutros)
+    }
+    
+    public func setIntrosOutrosIndex(_ introsOutrosIndex: Int) {
+        setProp("player.introsOutrosIndex", value: introsOutrosIndex)
+    }
+    
+    public func setAdverts(_ adverts: [PlayerSettings.Advert]) {
+        setProp("player.adverts", value: adverts)
+    }
+    
+    public func setAdvertIndex(_ advertIndex: Int) {
+        setProp("player.advertIndex", value: advertIndex)
+    }
+    
+    public func setPersistentAdImage(_ persistentAdImage: Bool) {
+        setProp("player.persistentAdImage", value: persistentAdImage)
+    }
+    
+    public func setPersistentIndex(_ persistentIndex: Int) {
+        setProp("player.persistentIndex", value: persistentIndex)
+    }
+    
+    public func setCurrentTime(_ currentTime: Float) {
+        setProp("player.currentTime", value: currentTime)
+    }
+    
+    public func setPlaybackState(_ playbackState: String) {
+        setProp("player.playbackState", value: playbackState)
+    }
+    
+    public func setPlaybackRate(_ playbackRate: Float) {
+        setProp("player.playbackRate", value: playbackRate)
+    }
+    
+    public func setTextColor(_ textColor: String) {
+        setProp("player.textColor", value: textColor)
+    }
+    
+    public func setBackgroundColor(_ backgroundColor: String) {
+        setProp("player.backgroundColor", value: backgroundColor)
+    }
+    
+    public func setIconColor(_ iconColor: String) {
+        setProp("player.iconColor", value: iconColor)
+    }
+    
+    public func setLogoIconEnabled(_ logoIconEnabled: Bool) {
+        setProp("player.logoIconEnabled", value: logoIconEnabled)
+    }
+    
+    public func setAdvertConsent(_ advertConsent: String) {
+        setProp("player.advertConsent", value: advertConsent)
+    }
+    
+    public func setAnalyticsConsent(_ analyticsConsent: String) {
+        setProp("player.analyticsConsent", value: analyticsConsent)
+    }
+    
+    public func setAnalyticsCustomUrl(_ analyticsCustomUrl: String) {
+        setProp("player.analyticsCustomUrl", value: analyticsCustomUrl)
+    }
+    
+    public func setAnalyticsTag(_ analyticsTag: String) {
+        setProp("player.analyticsTag", value: analyticsTag)
+    }
+    
+    public func setCaptureErrors(_ captureErrors: Bool) {
+        setProp("player.captureErrors", value: captureErrors)
     }
 }
