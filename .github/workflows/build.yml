@@ -17,6 +17,7 @@ jobs:
       - name: Build Player framework
         run: |
           xcodebuild clean build \
+            -workspace BeyondWordsPlayer.xcworkspace \
             -scheme BeyondWordsPlayer \
             -configuration Debug \
             -sdk iphonesimulator \
