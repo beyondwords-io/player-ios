@@ -138,7 +138,7 @@ public class PlayerView: UIView {
 }
 
 extension PlayerView : BridgeDelegate {
-    func bridge(_ bridge: Bridge, onMessage message: BridgeMessage) {
+    func bridge(_ bridge: Bridge, didReceive message: BridgeMessage) {
         if (self.bridge != bridge) { return }
         
         switch (message.type) {

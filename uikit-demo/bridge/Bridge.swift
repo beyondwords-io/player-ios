@@ -25,6 +25,6 @@ extension Bridge : WKScriptMessageHandler {
             return
         }
         
-        delegate?.bridge(self, onMessage: decodedMessage)
+        delegate?.bridge(self, didReceive: decodedMessage)
     }
 }
