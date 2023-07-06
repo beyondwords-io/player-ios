@@ -1,6 +1,6 @@
 //
 //  PlayerView.swift
-//  Player
+//  BeyondWordsPlayer
 //
 //  Created by Nikola Hristov on 6.07.23.
 //
@@ -29,7 +29,7 @@ public class PlayerView: UIView {
 #if DEBUG
         webView.isInspectable = true
 #endif
-        guard let playerHTMLPath = Bundle(identifier: "io.beyondwords.Player")!.path(forResource: "player", ofType: "html") else {
+        guard let playerHTMLPath = Bundle(for: PlayerView.self).path(forResource: "player", ofType: "html") else {
             fatalError("player.html not found!")
         }
         guard let playerHTMLPage = try? String(contentsOfFile: playerHTMLPath) else {

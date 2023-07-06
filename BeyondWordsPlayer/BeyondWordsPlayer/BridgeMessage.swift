@@ -1,6 +1,6 @@
 //
 //  BridgeMessage.swift
-//  Player
+//  BeyondWordsPlayer
 //
 //  Created by Nikola Hristov on 6.07.23.
 //

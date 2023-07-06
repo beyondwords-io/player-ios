@@ -6,12 +6,12 @@
 //
 
 import UIKit
-import Player
+import BeyondWordsPlayer
 
 class ViewController: UIViewController, PlayerDelegate {
-
+    
     private weak var playerView: PlayerView!
-        
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         let playerView = PlayerView()
@@ -24,10 +24,8 @@ class ViewController: UIViewController, PlayerDelegate {
         playerView.load(PlayerSettings(projectId: 19713, contentId: "52a12d13-3ed0-48b0-9f82-12177d4a8ca1"))
         self.playerView = playerView
     }
-
+    
     func player(_ player: PlayerView, onEvent event: PlayerEvent, settings: PlayerSettings) {
         print("onEvent \(event) \(settings)")
     }
-
 }
-
