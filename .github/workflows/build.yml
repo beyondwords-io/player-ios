@@ -23,14 +23,18 @@ jobs:
             -archivePath './build/BeyondWordsPlayer.framework-iphonesimulator.xcarchive' \
             BUILD_LIBRARY_FOR_DISTRIBUTION=YES \
             SKIP_INSTALL=NO
-      - name: Build Player framework
+      - name: Archive framework for iPhone
         run: |
-          xcodebuild clean build \
-            -workspace BeyondWordsPlayer.xcworkspace \
+          xcodebuild archive \
             -scheme BeyondWordsPlayer \
-            -configuration Debug \
-            -sdk iphonesimulator \
-            CODE_SIGN_IDENTITY="" \
-            CODE_SIGNING_REQUIRED=NO \
-            ONLY_ACTIVE_ARCH=NO \
-            ARCHS=arm64
+            -configuration Release \
+            -sdk iphoneos \
+            -archivePath "./build/BeyondWordsPlayer.framework-iphoneos.xcarchive" \
+            BUILD_LIBRARY_FOR_DISTRIBUTION=YES \
+            SKIP_INSTALL=NO
+      - name: Create XCFramework
+        run: |
+          xcodebuild -create-xcframework \
+            -framework "./build/BeyondWordsPlayer.framework-iphoneos.xcarchive/Products/Library/Frameworks/BeyondWordsPlayer.framework" \
+            -framework "./build/BeyondWordsPlayer.framework-iphonesimulator.xcarchive/Products/Library/Frameworks/BeyondWordsPlayer.framework" \
+            -output "./build/BeyondWordsPlayer.xcframework"
