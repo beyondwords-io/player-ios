@@ -39,12 +39,12 @@ jobs:
             -framework "./build/BeyondWordsPlayer.framework-iphonesimulator.xcarchive/Products/Library/Frameworks/BeyondWordsPlayer.framework" \
             -output "./build/BeyondWordsPlayer.xcframework"
       - name: Archive the XCFramework
-        run: zip -r BeyondWordsPlayer.xcframework.zip ./build/BeyondWordsPlayer.xcframework
+        run: cd build && zip -r BeyondWordsPlayer.xcframework.zip ./BeyondWordsPlayer.xcframework
       - name: Upload build artifact to GitHub release assets
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           tag: ${{ github.ref }}
-          file: ./BeyondWordsPlayer.xcframework.zip
+          file: ./build/BeyondWordsPlayer.xcframework.zip
           asset_name: BeyondWordsPlayer.xcframework.zip
           overwrite: true
