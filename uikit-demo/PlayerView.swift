@@ -63,6 +63,7 @@ public class PlayerView: UIView {
     
     deinit {
         webView.stopLoading()
+        webView.configuration.userContentController.removeAllScriptMessageHandlers()
     }
     
     private func commonInit() {
