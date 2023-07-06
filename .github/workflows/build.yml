@@ -16,5 +16,9 @@ jobs:
         run: sudo xcode-select -switch /Applications/Xcode_14.2.app
       - name: Build Player framework
         run: |
-          xcodebuild build \
-            -scheme BeyondWordsPlayer
+          xcodebuild clean build \
+            -scheme BeyondWordsPlayer \
+            -configuration Debug \
+            -sdk iphonesimulator \
+            CODE_SIGN_IDENTITY="" \
+            CODE_SIGNING_REQUIRED=NO
