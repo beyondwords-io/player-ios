@@ -1,11 +1,11 @@
-name: Build
+name: Release
 
 on:
-  push:
-    branches: [master]
+  release:
+    types: [published]
 
 jobs:
-  Build:
+  Release:
     runs-on: macos-latest
     steps:
       - name: Checkout
@@ -38,3 +38,13 @@ jobs:
             -framework "./build/BeyondWordsPlayer.framework-iphoneos.xcarchive/Products/Library/Frameworks/BeyondWordsPlayer.framework" \
             -framework "./build/BeyondWordsPlayer.framework-iphonesimulator.xcarchive/Products/Library/Frameworks/BeyondWordsPlayer.framework" \
             -output "./build/BeyondWordsPlayer.xcframework"
+      - name: Archive the XCFramework
+        run: zip -r BeyondWordsPlayer.xcframework.zip ./build/BeyondWordsPlayer.xcframework
+      - name: Upload build artifact to GitHub release assets
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          tag: ${{ github.ref }}
+          file: ./BeyondWordsPlayer.xcframework.zip
+          asset_name: BeyondWordsPlayer.xcframework.zip
+          overwrite: true
