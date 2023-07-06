@@ -14,3 +14,6 @@ jobs:
         run: ls -ld /Applications/Xcode*.app
       - name: Setup Xcode
         run: sudo xcode-select -switch /Applications/Xcode_14.2.app
+      - name: Build
+        run: xcodebuild build \
+          -scheme BeyondWordsPlayer
