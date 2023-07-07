@@ -15,6 +15,7 @@
 		F8A0E2412A56FF6500B6ACD3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F8A0E23F2A56FF6500B6ACD3 /* LaunchScreen.storyboard */; };
 		F8A0E24A2A56FF7700B6ACD3 /* BeyondWordsPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8A0E2492A56FF7700B6ACD3 /* BeyondWordsPlayer.framework */; };
 		F8A0E24B2A56FF7700B6ACD3 /* BeyondWordsPlayer.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F8A0E2492A56FF7700B6ACD3 /* BeyondWordsPlayer.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F8A0E25C2A57ECD800B6ACD3 /* CustomPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8A0E25B2A57ECD800B6ACD3 /* CustomPlayerView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -41,6 +42,7 @@
 		F8A0E2402A56FF6500B6ACD3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		F8A0E2422A56FF6500B6ACD3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F8A0E2492A56FF7700B6ACD3 /* BeyondWordsPlayer.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = BeyondWordsPlayer.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F8A0E25B2A57ECD800B6ACD3 /* CustomPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPlayerView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -82,6 +84,7 @@
 				F8A0E23D2A56FF6500B6ACD3 /* Assets.xcassets */,
 				F8A0E23F2A56FF6500B6ACD3 /* LaunchScreen.storyboard */,
 				F8A0E2422A56FF6500B6ACD3 /* Info.plist */,
+				F8A0E25B2A57ECD800B6ACD3 /* CustomPlayerView.swift */,
 			);
 			path = Example;
 			sourceTree = "<group>";
@@ -166,6 +169,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F8A0E25C2A57ECD800B6ACD3 /* CustomPlayerView.swift in Sources */,
 				F8A0E2392A56FF6400B6ACD3 /* ViewController.swift in Sources */,
 				F8A0E2352A56FF6400B6ACD3 /* AppDelegate.swift in Sources */,
 				F8A0E2372A56FF6400B6ACD3 /* SceneDelegate.swift in Sources */,
