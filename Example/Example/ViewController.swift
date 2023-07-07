@@ -25,7 +25,7 @@ class ViewController: UIViewController, PlayerDelegate {
         self.playerView = playerView
     }
     
-    func player(_ player: PlayerView, onEvent event: PlayerEvent, settings: PlayerSettings) {
+    func player(_ playerView: PlayerView, onEvent event: PlayerEvent, settings: PlayerSettings) {
         print("onEvent \(event) \(settings)")
     }
 }

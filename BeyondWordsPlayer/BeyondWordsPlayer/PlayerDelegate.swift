@@ -6,5 +6,5 @@
 //
 
 public protocol PlayerDelegate: AnyObject {
-    func player(_ player: PlayerView, onEvent event: PlayerEvent, settings: PlayerSettings)
+    func player(_ playerView: PlayerView, onEvent event: PlayerEvent, settings: PlayerSettings)
 }
