@@ -26,9 +26,6 @@ public class PlayerView: UIView {
         let webView = WKWebView(frame: .zero, configuration: configuration)
         webView.scrollView.bounces = false
         webView.scrollView.isScrollEnabled = false
-#if DEBUG
-        webView.isInspectable = true
-#endif
         guard let playerHTMLPath = Bundle(for: PlayerView.self).path(forResource: "player", ofType: "html") else {
             fatalError("player.html not found!")
         }
