@@ -26,9 +26,11 @@ public class PlayerView: UIView {
         let webView = WKWebView(frame: .zero, configuration: configuration)
         webView.scrollView.bounces = false
         webView.scrollView.isScrollEnabled = false
+        if #available(iOS 16.4, *) {
 #if DEBUG
-        webView.isInspectable = true
+            webView.isInspectable = true
 #endif
+        }
         guard let playerHTMLPath = Bundle(for: PlayerView.self).path(forResource: "player", ofType: "html") else {
             fatalError("player.html not found!")
         }
@@ -70,7 +72,7 @@ public class PlayerView: UIView {
     
     deinit {
         webView.stopLoading()
-        webView.configuration.userContentController.removeAllScriptMessageHandlers()
+        webView.configuration.userContentController.removeScriptMessageHandler(forName: bridge.name)
     }
     
     private func commonInit() {
