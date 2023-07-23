@@ -144,14 +144,18 @@ extension CustomPlayerView : PlayerDelegate {
         switch settings.playbackState {
         case "playing":
             playPauseButton.setImage(UIImage(systemName: "pause"), for: .normal)
-            playPauseButton.addAction(UIAction(title: "pause", handler: { action in
-                playerView.setPlaybackState("paused")
-            }), for: .touchUpInside)
+            playPauseButton.addTarget(self, action: #selector(pause), for: .touchUpInside)
         default:
             playPauseButton.setImage(UIImage(systemName: "play"), for: .normal)
-            playPauseButton.addAction(UIAction(title: "play", handler: { action in
-                playerView.setPlaybackState("playing")
-            }), for: .touchUpInside)
+            playPauseButton.addTarget(self, action: #selector(play), for: .touchUpInside)
         }
+    }
+    
+    @objc private func pause() {
+        playerView.setPlaybackState("paused")
+    }
+    
+    @objc private func play() {
+        playerView.setPlaybackState("playing")
     }
 }

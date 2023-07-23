@@ -10,6 +10,13 @@ import BeyondWordsPlayer
 
 class ViewController: UIViewController {
     
+    private weak var projectIdField: UITextField!
+    private weak var contentIdField: UITextField!
+    private weak var sourceIdField: UITextField!
+    private weak var playlistIdField: UITextField!
+    private weak var customUICheckbox: UISwitch!
+    private weak var playerViewContainer: UIView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -125,39 +132,48 @@ class ViewController: UIViewController {
         sourceIdField.text = UserDefaults.standard.string(forKey: "sourceId")
         customUICheckbox.setOn(UserDefaults.standard.bool(forKey: "customUI"), animated: false)
         
-        loadButton.addAction(UIAction(title: "load", handler: { action in
-            UserDefaults.standard.setValue(projectIdField.text, forKey: "projectId")
-            UserDefaults.standard.setValue(contentIdField.text, forKey: "contentId")
-            UserDefaults.standard.setValue(playlistIdField.text, forKey: "playlistId")
-            UserDefaults.standard.setValue(sourceIdField.text, forKey: "sourceId")
-            UserDefaults.standard.setValue(customUICheckbox.isOn, forKey: "customUI")
-            let playerSettings = PlayerSettings(
-                projectId: Int(projectIdField.text ?? ""),
-                contentId: contentIdField.text,
-                playlistId: Int(playlistIdField.text ?? ""),
-                sourceId: sourceIdField.text
-            )
-            
-            let playerView: UIView
-            switch customUICheckbox.isOn {
-            case true:
-                let customPlayerView = CustomPlayerView()
-                customPlayerView.load(playerSettings)
-                playerView = customPlayerView
-            case false:
-                let defaultPlayerView = PlayerView()
-                defaultPlayerView.load(playerSettings)
-                playerView = defaultPlayerView
-            }
-            
-            for view in playerViewContainer.subviews {
-                view.removeFromSuperview()
-            }
-            
-            playerView.translatesAutoresizingMaskIntoConstraints = false
-            playerViewContainer.addSubview(playerView)
-            playerView.topAnchor.constraint(equalTo: playerViewContainer.topAnchor).isActive = true
-            playerView.widthAnchor.constraint(equalTo: playerViewContainer.widthAnchor).isActive = true
-        }), for: .touchUpInside)
+        self.projectIdField = projectIdField
+        self.contentIdField = contentIdField
+        self.playlistIdField = playlistIdField
+        self.sourceIdField = sourceIdField
+        self.customUICheckbox = customUICheckbox
+        self.playerViewContainer = playerViewContainer
+        
+        loadButton.addTarget(self, action: #selector(load), for: .touchUpInside)
+    }
+    
+    @objc func load() {
+        UserDefaults.standard.setValue(projectIdField.text, forKey: "projectId")
+        UserDefaults.standard.setValue(contentIdField.text, forKey: "contentId")
+        UserDefaults.standard.setValue(playlistIdField.text, forKey: "playlistId")
+        UserDefaults.standard.setValue(sourceIdField.text, forKey: "sourceId")
+        UserDefaults.standard.setValue(customUICheckbox.isOn, forKey: "customUI")
+        let playerSettings = PlayerSettings(
+            projectId: Int(projectIdField.text ?? ""),
+            contentId: contentIdField.text,
+            playlistId: Int(playlistIdField.text ?? ""),
+            sourceId: sourceIdField.text
+        )
+        
+        let playerView: UIView
+        switch customUICheckbox.isOn {
+        case true:
+            let customPlayerView = CustomPlayerView()
+            customPlayerView.load(playerSettings)
+            playerView = customPlayerView
+        case false:
+            let defaultPlayerView = PlayerView()
+            defaultPlayerView.load(playerSettings)
+            playerView = defaultPlayerView
+        }
+        
+        for view in playerViewContainer.subviews {
+            view.removeFromSuperview()
+        }
+        
+        playerView.translatesAutoresizingMaskIntoConstraints = false
+        playerViewContainer.addSubview(playerView)
+        playerView.topAnchor.constraint(equalTo: playerViewContainer.topAnchor).isActive = true
+        playerView.widthAnchor.constraint(equalTo: playerViewContainer.widthAnchor).isActive = true
     }
 }
