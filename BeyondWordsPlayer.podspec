@@ -7,7 +7,9 @@ Pod::Spec.new do |s|
   s.license        = { :type => 'Proprietary', :file => 'LICENSE' }
   s.author         = { 'BeyondWords Developers' => 'support@beyondwords.io' }
   s.source         = { :git => 'https://github.com/beyondWords-io/player-ios.git', :tag => s.version.to_s }
+  s.source_files   = "BeyondWordsPlayer/BeyondWordsPlayer/**/*.{swift}"
+  s.resources      = 'BeyondWordsPlayer/BeyondWordsPlayer/player.html'
+
   s.ios.deployment_target = '13.0'
   s.swift_versions = '4.0'
-  s.source_files = "BeyondWordsPlayer/BeyondWordsPlayer/**/*.{swift}"
 end
