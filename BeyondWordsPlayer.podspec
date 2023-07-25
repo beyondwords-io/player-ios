@@ -11,5 +11,5 @@ Pod::Spec.new do |s|
   s.resources      = 'BeyondWordsPlayer/BeyondWordsPlayer/player.html'
 
   s.ios.deployment_target = '13.0'
-  s.swift_versions = '4.0'
+  s.swift_versions = '5.0'
 end
