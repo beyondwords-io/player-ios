@@ -38,11 +38,11 @@ public struct PlayerSettings: Codable {
     public var iconColor: String? = nil
     public var logoIconEnabled: Bool? = nil
     public var currentSegment: Segment? = nil
+    public var loadedMedia: Media? = nil
     public var advertConsent: String? = nil
     public var analyticsConsent: String? = nil
     public var analyticsCustomUrl: String? = nil
     public var analyticsTag: String? = nil
-    public var captureErrors: Bool? = nil
     
     public struct Identifier: Codable {
         public var contentId: String? = nil
@@ -58,16 +58,19 @@ public struct PlayerSettings: Codable {
         }
     }
     
-    
     public struct Media: Codable {
         public var id: Int? = nil
         public var url: String? = nil
         public var contentType: String? = nil
+        public var duration: Float? = nil
+        public var format: String? = nil
         
-        public init(id: Int? = nil, url: String? = nil, contentType: String? = nil) {
+        public init(id: Int? = nil, url: String? = nil, contentType: String? = nil, duration: Float? = nil, format: String? = nil) {
             self.id = id
             self.url = url
             self.contentType = contentType
+            self.duration = duration
+            self.format = format
         }
     }
     
@@ -97,10 +100,11 @@ public struct PlayerSettings: Codable {
         public var sourceUrl: String? = nil
         public var adsEnabled: Bool? = nil
         public var duration: Float? = nil
-        public var media: [Media]? = nil
+        public var audio: [Media]? = nil
+        public var video: [Media]? = nil
         public var segments: [Segment]? = nil
         
-        public init(id: String? = nil, title: String? = nil, imageUrl: String? = nil, sourceId: String? = nil, sourceUrl: String? = nil, adsEnabled: Bool? = nil, duration: Float? = nil, media: [Media]? = nil, segments: [Segment]? = nil) {
+        init(id: String? = nil, title: String? = nil, imageUrl: String? = nil, sourceId: String? = nil, sourceUrl: String? = nil, adsEnabled: Bool? = nil, duration: Float? = nil, audio: [Media]? = nil, video: [Media]? = nil, segments: [Segment]? = nil) {
             self.id = id
             self.title = title
             self.imageUrl = imageUrl
@@ -108,18 +112,21 @@ public struct PlayerSettings: Codable {
             self.sourceUrl = sourceUrl
             self.adsEnabled = adsEnabled
             self.duration = duration
-            self.media = media
+            self.audio = audio
+            self.video = video
             self.segments = segments
         }
     }
     
-    public struct IntroOutro: Codable{
+    public struct IntroOutro: Codable {
         public var placement: String? = nil
-        public var media: [Media]? = nil
+        public var audio: [Media]? = nil
+        public var video: [Media]? = nil
         
-        public init(placement: String? = nil, media: [Media]? = nil) {
+        public init(placement: String? = nil, audio: [Media]? = nil, video: [Media]? = nil) {
             self.placement = placement
-            self.media = media
+            self.audio = audio
+            self.video = video
         }
     }
     
@@ -132,9 +139,10 @@ public struct PlayerSettings: Codable {
         public var textColor: String? = nil
         public var backgroundColor: String? = nil
         public var iconColor: String? = nil
-        public var media: [Media]? = nil
+        public var audio: [Media]? = nil
+        public var video: [Media]? = nil
         
-        public init(id: Int? = nil, type: String? = nil, placement: String? = nil, clickThroughUrl: String? = nil, vastUrl: String? = nil, textColor: String? = nil, backgroundColor: String? = nil, iconColor: String? = nil, media: [Media]? = nil) {
+        public init(id: Int? = nil, type: String? = nil, placement: String? = nil, clickThroughUrl: String? = nil, vastUrl: String? = nil, textColor: String? = nil, backgroundColor: String? = nil, iconColor: String? = nil, audio: [Media]? = nil, video: [Media]? = nil) {
             self.id = id
             self.type = type
             self.placement = placement
@@ -143,11 +151,12 @@ public struct PlayerSettings: Codable {
             self.textColor = textColor
             self.backgroundColor = backgroundColor
             self.iconColor = iconColor
-            self.media = media
+            self.audio = audio
+            self.video = video
         }
     }
     
-    public init(playerApiUrl: String? = nil, projectId: Int? = nil, contentId: String? = nil, playlistId: Int? = nil, sourceId: String? = nil, sourceUrl: String? = nil, playlist: [Identifier]? = nil, showUserInterface: Bool? = nil, playerStyle: String? = nil, playerTitle: String? = nil, callToAction: String? = nil, skipButtonStyle: String? = nil, playlistStyle: String? = nil, playlistToggle: String? = nil, mediaSession: String? = nil, content: [Content]? = nil, contentIndex: Int? = nil, introsOutros: [IntroOutro]? = nil, introsOutrosIndex: Int? = nil, adverts: [Advert]? = nil, advertIndex: Int? = nil, persistentAdImage: Bool? = nil, persistentIndex: Int? = nil, duration: Float? = nil, currentTime: Float? = nil, playbackState: String? = nil, playbackRate: Float? = nil, textColor: String? = nil, backgroundColor: String? = nil, iconColor: String? = nil, logoIconEnabled: Bool? = nil, currentSegment: Segment? = nil, advertConsent: String? = nil, analyticsConsent: String? = nil, analyticsCustomUrl: String? = nil, analyticsTag: String? = nil, captureErrors: Bool? = nil) {
+    public init(playerApiUrl: String? = nil, projectId: Int? = nil, contentId: String? = nil, playlistId: Int? = nil, sourceId: String? = nil, sourceUrl: String? = nil, playlist: [Identifier]? = nil, showUserInterface: Bool? = nil, playerStyle: String? = nil, playerTitle: String? = nil, callToAction: String? = nil, skipButtonStyle: String? = nil, playlistStyle: String? = nil, playlistToggle: String? = nil, mediaSession: String? = nil, content: [Content]? = nil, contentIndex: Int? = nil, introsOutros: [IntroOutro]? = nil, introsOutrosIndex: Int? = nil, adverts: [Advert]? = nil, advertIndex: Int? = nil, persistentAdImage: Bool? = nil, persistentIndex: Int? = nil, duration: Float? = nil, currentTime: Float? = nil, playbackState: String? = nil, playbackRate: Float? = nil, textColor: String? = nil, backgroundColor: String? = nil, iconColor: String? = nil, logoIconEnabled: Bool? = nil, currentSegment: Segment? = nil, loadedMedia: Media? = nil, advertConsent: String? = nil, analyticsConsent: String? = nil, analyticsCustomUrl: String? = nil, analyticsTag: String? = nil) {
         self.playerApiUrl = playerApiUrl
         self.projectId = projectId
         self.contentId = contentId
@@ -180,10 +189,10 @@ public struct PlayerSettings: Codable {
         self.iconColor = iconColor
         self.logoIconEnabled = logoIconEnabled
         self.currentSegment = currentSegment
+        self.loadedMedia = loadedMedia
         self.advertConsent = advertConsent
         self.analyticsConsent = analyticsConsent
         self.analyticsCustomUrl = analyticsCustomUrl
         self.analyticsTag = analyticsTag
-        self.captureErrors = captureErrors
     }
 }
