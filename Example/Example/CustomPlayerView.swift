@@ -84,45 +84,9 @@ public class CustomPlayerView: UIView {
     }
     
     public func load(_ playerSettings: PlayerSettings) {
-        playerView.load(PlayerSettings(
-            playerApiUrl: playerSettings.playerApiUrl,
-            projectId: playerSettings.projectId,
-            contentId: playerSettings.contentId,
-            playlistId: playerSettings.playlistId,
-            sourceId: playerSettings.sourceId,
-            sourceUrl: playerSettings.sourceUrl,
-            playlist: playerSettings.playlist,
-            showUserInterface: false,
-            playerStyle: playerSettings.playerStyle,
-            playerTitle: playerSettings.playerTitle,
-            callToAction: playerSettings.callToAction,
-            skipButtonStyle: playerSettings.skipButtonStyle,
-            playlistStyle: playerSettings.playlistStyle,
-            playlistToggle: playerSettings.playlistToggle,
-            mediaSession: playerSettings.mediaSession,
-            content: playerSettings.content,
-            contentIndex: playerSettings.contentIndex,
-            introsOutros: playerSettings.introsOutros,
-            introsOutrosIndex: playerSettings.introsOutrosIndex,
-            adverts: playerSettings.adverts,
-            advertIndex: playerSettings.advertIndex,
-            persistentAdImage: playerSettings.persistentAdImage,
-            persistentIndex: playerSettings.persistentIndex,
-            duration: playerSettings.duration,
-            currentTime: playerSettings.currentTime,
-            playbackState: playerSettings.playbackState,
-            playbackRate: playerSettings.playbackRate,
-            textColor: playerSettings.textColor,
-            backgroundColor: playerSettings.backgroundColor,
-            iconColor: playerSettings.iconColor,
-            logoIconEnabled: playerSettings.logoIconEnabled,
-            currentSegment: playerSettings.currentSegment,
-            advertConsent: playerSettings.advertConsent,
-            analyticsConsent: playerSettings.analyticsConsent,
-            analyticsCustomUrl: playerSettings.analyticsCustomUrl,
-            analyticsTag: playerSettings.analyticsTag,
-            captureErrors: playerSettings.captureErrors
-        ))
+        var playerSettingsCopy = playerSettings
+        playerSettingsCopy.showUserInterface = false
+        playerView.load(playerSettingsCopy)
     }
 }
 
