@@ -1,0 +1,14 @@
+name: Cocoapod
+
+on:
+  push:
+    branches: ["*"]
+
+jobs:
+  Cocoapod:
+    runs-on: macos-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Check trunk token
+        run: pod trunk me
