@@ -10,6 +10,12 @@ import BeyondWordsPlayer
 
 public class CustomPlayerView: UIView {
     
+    public var verbose = false {
+        didSet {
+            playerView.verbose = verbose
+        }
+    }
+    
     private lazy var playerView = {
         let playerView = PlayerView()
         playerView.delegate = self
@@ -51,7 +57,7 @@ public class CustomPlayerView: UIView {
         backgroundColor = UIColor.gray.withAlphaComponent(0.2)
         layer.cornerRadius = 16;
         layer.masksToBounds = true;
-
+        
         heightAnchor.constraint(equalToConstant: 60).isActive = true
         
         playerView.translatesAutoresizingMaskIntoConstraints = false
@@ -103,7 +109,7 @@ extension CustomPlayerView : PlayerDelegate {
         }
         
         playerTitleView.text = settings.playerTitle
-
+        
         playPauseButton.isEnabled = true
         switch settings.playbackState {
         case "playing":

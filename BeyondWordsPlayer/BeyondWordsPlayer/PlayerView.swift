@@ -12,6 +12,8 @@ public class PlayerView: UIView {
     
     public weak var delegate: PlayerDelegate?
     
+    public var verbose = false
+    
     private lazy var webViewContainer = {
         UIView()
     }()
@@ -107,6 +109,7 @@ public class PlayerView: UIView {
     }
     
     private func onEvent(event: PlayerEvent, settings: PlayerSettings) {
+        if (self.verbose) { print("onEvent: \(event) \(settings)") }
         delegate?.player(self, onEvent: event, settings: settings)
     }
     
@@ -137,6 +140,7 @@ public class PlayerView: UIView {
         if (!ready) {
             pendingCommands.append(command)
         } else {
+            if (self.verbose) { print("exec: \(command)") }
             webView.evaluateJavaScript(command) { (result, error) in
                 if let error {
                     print("PlayerView:exec: \(error)")

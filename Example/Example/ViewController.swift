@@ -159,10 +159,12 @@ class ViewController: UIViewController {
         switch customUICheckbox.isOn {
         case true:
             let customPlayerView = CustomPlayerView()
+            customPlayerView.verbose = true
             customPlayerView.load(playerSettings)
             playerView = customPlayerView
         case false:
             let defaultPlayerView = PlayerView()
+            defaultPlayerView.verbose = true
             defaultPlayerView.load(playerSettings)
             playerView = defaultPlayerView
         }
