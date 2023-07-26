@@ -26,12 +26,21 @@ extension Bridge : WKScriptMessageHandler {
         if self.name != message.name { return }
         
         guard let messageString = message.body as? String,
-              let messageData = messageString.data(using: .utf8),
-              let decodedMessage = try? jsonDecoder.decode(BridgeMessage.self, from: messageData) else {
+              let messageData = messageString.data(using: .utf8) else {
             print("Cannot decode BridgeMessage: \(message.body)")
             return
         }
         
-        delegate?.bridge(self, didReceive: decodedMessage)
+        let decodedMessage: BridgeMessage?
+        do {
+            decodedMessage = try jsonDecoder.decode(BridgeMessage.self, from: messageData)
+        } catch {
+            print("Cannot decode BridgeMessage: \(message.body) \(error)")
+            return
+        }
+        
+        if let decodedMessage {
+            delegate?.bridge(self, didReceive: decodedMessage)
+        }
     }
 }
