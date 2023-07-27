@@ -26,6 +26,7 @@ public class PlayerView: UIView {
         contentController.add(bridge, name: bridge.name)
         configuration.userContentController = contentController
         let webView = WKWebView(frame: .zero, configuration: configuration)
+        webView.navigationDelegate = self
         webView.scrollView.bounces = false
         webView.scrollView.isScrollEnabled = false
         if #available(iOS 16.4, *) {
@@ -147,6 +148,20 @@ public class PlayerView: UIView {
                 }
             }
         }
+    }
+}
+
+extension PlayerView : WKNavigationDelegate {
+    public func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+        if navigationAction.navigationType == .linkActivated,
+           let url = navigationAction.request.url,
+           UIApplication.shared.canOpenURL(url) {
+            UIApplication.shared.open(url)
+            decisionHandler(.cancel)
+            return
+        }
+        
+        decisionHandler(.allow)
     }
 }
 
