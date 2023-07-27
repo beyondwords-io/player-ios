@@ -31,7 +31,7 @@ extension Bridge : WKScriptMessageHandler {
             return
         }
         
-        let decodedMessage: BridgeMessage?
+        let decodedMessage: BridgeMessage
         do {
             decodedMessage = try jsonDecoder.decode(BridgeMessage.self, from: messageData)
         } catch {
@@ -39,8 +39,6 @@ extension Bridge : WKScriptMessageHandler {
             return
         }
         
-        if let decodedMessage {
-            delegate?.bridge(self, didReceive: decodedMessage)
-        }
+        delegate?.bridge(self, didReceive: decodedMessage)
     }
 }
