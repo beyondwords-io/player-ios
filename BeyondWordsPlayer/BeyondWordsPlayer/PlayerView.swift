@@ -74,11 +74,14 @@ public class PlayerView: UIView {
     }
     
     deinit {
+        if (self.verbose) { print("BeyondWordsPlayer:deinit") }
         webView.stopLoading()
         webView.configuration.userContentController.removeScriptMessageHandler(forName: bridge.name)
     }
     
     private func commonInit() {
+        if (self.verbose) { print("BeyondWordsPlayer:init") }
+        
         clipsToBounds = true
         
         webViewContainer.translatesAutoresizingMaskIntoConstraints = false
@@ -110,7 +113,7 @@ public class PlayerView: UIView {
     }
     
     private func onEvent(event: PlayerEvent, settings: PlayerSettings) {
-        if (self.verbose) { print("onEvent: \(event) \(settings)") }
+        if (self.verbose) { print("BeyondWordsPlayer:onEvent: \(event) \(settings)") }
         delegate?.player(self, onEvent: event, settings: settings)
     }
     
@@ -141,10 +144,10 @@ public class PlayerView: UIView {
         if (!ready) {
             pendingCommands.append(command)
         } else {
-            if (self.verbose) { print("exec: \(command)") }
+            if (self.verbose) { print("BeyondWordsPlayer:exec: \(command)") }
             webView.evaluateJavaScript(command) { (result, error) in
                 if let error {
-                    print("PlayerView:exec: \(error)")
+                    print("BeyondWordsPlayer:error: \(error)")
                 }
             }
         }
@@ -177,7 +180,7 @@ extension PlayerView : BridgeDelegate {
         case "event":
             onEvent(event: message.event!, settings: message.settings!)
         default:
-            print("Unknown message received from iOSBridge \(message.type)")
+            print("BeyondWordsPlayer:iOSBridge Unknown message received \(message.type)")
         }
     }
 }
