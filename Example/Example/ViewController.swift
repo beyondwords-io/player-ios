@@ -17,66 +17,58 @@ class ViewController: UIViewController {
     private weak var playlistIdInput: UITextView!
     private weak var playerStyleInput: UITextView!
     private weak var playerUIInput: UITextView!
-    private weak var playerViewContainer: UIView!
+    private weak var playerViewContainer: UIStackView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let projectIdInput = createTextInputField(name: "projectId", placeholder: "Project id")
-        projectIdInput.topAnchor.constraint(equalTo: view.topAnchor, constant: 80).isActive = true
+        let scrollView = UIScrollView()
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(scrollView)
+        scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
+        scrollView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -20).isActive = true
+        scrollView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 20).isActive = true
+        scrollView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
         
-        let contentIdInput = createTextInputField(name: "contentId", placeholder: "Content id:")
-        contentIdInput.topAnchor.constraint(equalTo: projectIdInput.bottomAnchor, constant: 12).isActive = true
+        let contentView = UIStackView()
+        contentView.distribution = .fill
+        contentView.spacing = 16
+        contentView.axis = .vertical
+        contentView.translatesAutoresizingMaskIntoConstraints = false
+        scrollView.addSubview(contentView)
+        contentView.widthAnchor.constraint(equalTo: scrollView.frameLayoutGuide.widthAnchor).isActive = true
+        contentView.topAnchor.constraint(equalTo: scrollView.contentLayoutGuide.topAnchor).isActive = true
+        contentView.leftAnchor.constraint(equalTo: scrollView.contentLayoutGuide.leftAnchor).isActive = true
+        contentView.rightAnchor.constraint(equalTo: scrollView.contentLayoutGuide.rightAnchor).isActive = true
+        contentView.bottomAnchor.constraint(equalTo: scrollView.contentLayoutGuide.bottomAnchor).isActive = true
         
-        let sourceIdInput = createTextInputField(name: "sourceId", placeholder: "Source id:")
-        sourceIdInput.topAnchor.constraint(equalTo: contentIdInput.bottomAnchor, constant: 12).isActive = true
+        self.projectIdInput = createTextInputField(name: "projectId", placeholder: "Project id", parent: contentView)
+        self.contentIdInput = createTextInputField(name: "contentId", placeholder: "Content id:", parent: contentView)
+        self.sourceIdInput = createTextInputField(name: "sourceId", placeholder: "Source id:", parent: contentView)
+        self.playlistIdInput = createTextInputField(name: "playlistId", placeholder: "Playlist id:", parent: contentView)
+        self.playerStyleInput = createSelectInputField(name: "playerStyle", placeholder: "Player style:", action: #selector(selectPlayerStyle), parent: contentView)
+        self.playerUIInput = createSelectInputField(name: "playerUI", placeholder: "Player UI:", action: #selector(selectPlayerUI), parent: contentView)
         
-        let playlistIdInput = createTextInputField(name: "playlistId", placeholder: "Playlist id:")
-        playlistIdInput.topAnchor.constraint(equalTo: sourceIdInput.bottomAnchor, constant: 12).isActive = true
-        
-        let playerStyleInput = createSelectInputField(name: "playerStyle", placeholder: "Player style:", action: #selector(selectPlayerStyle))
-        playerStyleInput.topAnchor.constraint(equalTo: playlistIdInput.bottomAnchor, constant: 12).isActive = true
-        
-        let playerUIInput = createSelectInputField(name: "playerUI", placeholder: "Player UI:", action: #selector(selectPlayerUI))
-        playerUIInput.topAnchor.constraint(equalTo: playerStyleInput.bottomAnchor, constant: 12).isActive = true
-        
-        let loadButton = createButton(title: "Load Player", action: #selector(load))
-        loadButton.topAnchor.constraint(equalTo: playerUIInput.bottomAnchor, constant: 12).isActive = true
-        
-        let playerViewContainer = UIView()
-        playerViewContainer.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(playerViewContainer)
-        playerViewContainer.topAnchor.constraint(equalTo: loadButton.bottomAnchor, constant: 12).isActive = true
-        playerViewContainer.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-        playerViewContainer.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
-        playerViewContainer.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
-        
-        self.projectIdInput = projectIdInput
-        self.contentIdInput = contentIdInput
-        self.sourceIdInput = sourceIdInput
-        self.playlistIdInput = playlistIdInput
-        self.playerStyleInput = playerStyleInput
-        self.playerUIInput = playerUIInput
-        self.playerViewContainer = playerViewContainer
-    }
-    
-    func createButton(title: String, action: Selector) -> UIButton {
         let button = UIButton(type: .system)
-        button.setTitle(title, for: .normal)
+        button.setTitle("Load Player", for: .normal)
         button.setTitleColor(.black, for: .normal)
         button.layer.cornerRadius = 4
         button.layer.borderWidth = 1
         button.layer.borderColor = UIColor.lightGray.cgColor
         button.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(button)
-        button.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 20).isActive = true
-        button.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -20).isActive = true
-        button.addTarget(self, action: action, for: .touchUpInside)
-        return button
+        contentView.addArrangedSubview(button)
+        button.addTarget(self, action: #selector(load), for: .touchUpInside)
+
+        let playerViewContainer = UIStackView()
+        playerViewContainer.distribution = .fill
+        playerViewContainer.axis = .vertical
+        playerViewContainer.translatesAutoresizingMaskIntoConstraints = false
+        contentView.addArrangedSubview(playerViewContainer)
+        self.playerViewContainer = playerViewContainer
     }
     
-    func createSelectInputField(name: String, placeholder: String, action: Selector) -> UITextView {
-        let inputField = createTextInputField(name: name, placeholder: placeholder)
+    func createSelectInputField(name: String, placeholder: String, action: Selector, parent: UIStackView) -> UITextView {
+        let inputField = createTextInputField(name: name, placeholder: placeholder, parent: parent)
         inputField.isEditable = false
         inputField.isSelectable = false
         
@@ -87,29 +79,35 @@ class ViewController: UIViewController {
         return inputField
     }
     
-    func createTextInputField(name: String, placeholder: String) -> UITextView {
+    func createTextInputField(name: String, placeholder: String, parent: UIStackView) -> UITextView {
+        let inputContainer = UIView()
+        inputContainer.translatesAutoresizingMaskIntoConstraints = false
+        parent.addArrangedSubview(inputContainer)
+        inputContainer.heightAnchor.constraint(equalToConstant: 56).isActive = true
+        
         let inputField = JVFloatLabeledTextView()
         inputField.text = UserDefaults.standard.string(forKey: name)
-        inputField.translatesAutoresizingMaskIntoConstraints = false
         inputField.placeholder = "  " + placeholder
         inputField.isScrollEnabled = false
         inputField.sizeToFit()
         inputField.autocorrectionType = .no
         inputField.spellCheckingType = .no
         inputField.textContainerInset = .init(top: 0, left: 6, bottom: 0, right: 6)
-        view.addSubview(inputField)
-        inputField.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 20).isActive = true
-        inputField.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -20).isActive = true
-        inputField.heightAnchor.constraint(equalToConstant: 56).isActive = true
+        inputField.translatesAutoresizingMaskIntoConstraints = false
+        inputContainer.addSubview(inputField)
+        inputField.topAnchor.constraint(equalTo: inputContainer.topAnchor).isActive = true
+        inputField.bottomAnchor.constraint(equalTo: inputContainer.bottomAnchor).isActive = true
+        inputField.leftAnchor.constraint(equalTo: inputContainer.leftAnchor).isActive = true
+        inputField.rightAnchor.constraint(equalTo: inputContainer.rightAnchor).isActive = true
         
         let borderBottom = UIView()
         borderBottom.backgroundColor = .lightGray
         borderBottom.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(borderBottom)
+        inputContainer.addSubview(borderBottom)
         borderBottom.heightAnchor.constraint(equalToConstant: 1).isActive = true
-        borderBottom.bottomAnchor.constraint(equalTo: inputField.bottomAnchor).isActive = true
-        borderBottom.leftAnchor.constraint(equalTo: inputField.leftAnchor).isActive = true
-        borderBottom.rightAnchor.constraint(equalTo: inputField.rightAnchor).isActive = true
+        borderBottom.bottomAnchor.constraint(equalTo: inputContainer.bottomAnchor).isActive = true
+        borderBottom.leftAnchor.constraint(equalTo: inputContainer.leftAnchor).isActive = true
+        borderBottom.rightAnchor.constraint(equalTo: inputContainer.rightAnchor).isActive = true
         
         return inputField
     }
@@ -179,8 +177,6 @@ class ViewController: UIViewController {
         }
         
         playerView.translatesAutoresizingMaskIntoConstraints = false
-        playerViewContainer.addSubview(playerView)
-        playerView.topAnchor.constraint(equalTo: playerViewContainer.topAnchor).isActive = true
-        playerView.widthAnchor.constraint(equalTo: playerViewContainer.widthAnchor).isActive = true
+        playerViewContainer.addArrangedSubview(playerView)
     }
 }
