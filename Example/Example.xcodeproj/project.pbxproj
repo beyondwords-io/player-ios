@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F81223142A8A5627000BBBCB /* JVFloatLabeledText.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = F81223132A8A5627000BBBCB /* JVFloatLabeledText.xcframework */; };
 		F8A0E2352A56FF6400B6ACD3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8A0E2342A56FF6400B6ACD3 /* AppDelegate.swift */; };
 		F8A0E2372A56FF6400B6ACD3 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8A0E2362A56FF6400B6ACD3 /* SceneDelegate.swift */; };
 		F8A0E2392A56FF6400B6ACD3 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8A0E2382A56FF6400B6ACD3 /* ViewController.swift */; };
@@ -33,6 +34,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		F81223132A8A5627000BBBCB /* JVFloatLabeledText.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = JVFloatLabeledText.xcframework; sourceTree = "<group>"; };
 		F8A0E2312A56FF6400B6ACD3 /* Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F8A0E2342A56FF6400B6ACD3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F8A0E2362A56FF6400B6ACD3 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -51,6 +53,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F8A0E24A2A56FF7700B6ACD3 /* BeyondWordsPlayer.framework in Frameworks */,
+				F81223142A8A5627000BBBCB /* JVFloatLabeledText.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -92,6 +95,7 @@
 		F8A0E2482A56FF7700B6ACD3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F81223132A8A5627000BBBCB /* JVFloatLabeledText.xcframework */,
 				F8A0E2492A56FF7700B6ACD3 /* BeyondWordsPlayer.framework */,
 			);
 			name = Frameworks;
