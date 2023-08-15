@@ -8,7 +8,7 @@
 import UIKit
 import BeyondWordsPlayer
 
-public class CustomPlayerView: UIView {
+public class CustomPlayerView: UIStackView {
     
     public var verbose = false {
         didSet {
@@ -48,45 +48,44 @@ public class CustomPlayerView: UIView {
         commonInit()
     }
     
-    required init?(coder aDecoder: NSCoder) {
+    required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         commonInit()
     }
     
     private func commonInit() {
-        backgroundColor = UIColor.gray.withAlphaComponent(0.2)
-        layer.cornerRadius = 16;
-        layer.masksToBounds = true;
-        
-        heightAnchor.constraint(equalToConstant: 60).isActive = true
+        distribution = .fill
+        axis = .vertical
         
         playerView.translatesAutoresizingMaskIntoConstraints = false
-        addSubview(playerView)
-        playerView.topAnchor.constraint(equalTo: topAnchor).isActive = true
-        playerView.leftAnchor.constraint(equalTo: leftAnchor).isActive = true
-        playerView.widthAnchor.constraint(equalToConstant: 0).isActive = true
-        playerView.heightAnchor.constraint(equalToConstant: 0).isActive = true
+        addArrangedSubview(playerView)
+        
+        let controlBar = UIView()
+        controlBar.translatesAutoresizingMaskIntoConstraints = false
+        addArrangedSubview(controlBar)
+        controlBar.heightAnchor.constraint(equalToConstant: 60).isActive = true
+        controlBar.backgroundColor = UIColor.lightGray.withAlphaComponent(0.2)
         
         playPauseButton.translatesAutoresizingMaskIntoConstraints = false
         addSubview(playPauseButton)
-        playPauseButton.topAnchor.constraint(equalTo: topAnchor).isActive = true
-        playPauseButton.leftAnchor.constraint(equalTo: leftAnchor).isActive = true
-        playPauseButton.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
-        playPauseButton.widthAnchor.constraint(equalTo: playPauseButton.heightAnchor).isActive = true
+        playPauseButton.topAnchor.constraint(equalTo: controlBar.topAnchor).isActive = true
+        playPauseButton.leftAnchor.constraint(equalTo: controlBar.leftAnchor).isActive = true
+        playPauseButton.bottomAnchor.constraint(equalTo: controlBar.bottomAnchor).isActive = true
+        playPauseButton.widthAnchor.constraint(equalTo: controlBar.heightAnchor).isActive = true
         
         contentTitleView.translatesAutoresizingMaskIntoConstraints = false
         addSubview(contentTitleView)
-        contentTitleView.topAnchor.constraint(equalTo: topAnchor).isActive = true
-        contentTitleView.rightAnchor.constraint(equalTo: rightAnchor).isActive = true
+        contentTitleView.topAnchor.constraint(equalTo: controlBar.topAnchor).isActive = true
+        contentTitleView.rightAnchor.constraint(equalTo: controlBar.rightAnchor).isActive = true
         contentTitleView.leftAnchor.constraint(equalTo: playPauseButton.rightAnchor).isActive = true
-        contentTitleView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.5).isActive = true
+        contentTitleView.heightAnchor.constraint(equalTo: controlBar.heightAnchor, multiplier: 0.5).isActive = true
         
         playerTitleView.translatesAutoresizingMaskIntoConstraints = false
         addSubview(playerTitleView)
-        playerTitleView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
-        playerTitleView.rightAnchor.constraint(equalTo: rightAnchor).isActive = true
+        playerTitleView.bottomAnchor.constraint(equalTo: controlBar.bottomAnchor).isActive = true
+        playerTitleView.rightAnchor.constraint(equalTo: controlBar.rightAnchor).isActive = true
         playerTitleView.leftAnchor.constraint(equalTo: playPauseButton.rightAnchor).isActive = true
-        playerTitleView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.5).isActive = true
+        playerTitleView.heightAnchor.constraint(equalTo: controlBar.heightAnchor, multiplier: 0.5).isActive = true
     }
     
     public func load(_ playerSettings: PlayerSettings) {
