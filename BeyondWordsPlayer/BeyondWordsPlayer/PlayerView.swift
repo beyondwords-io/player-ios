@@ -108,7 +108,7 @@ public class PlayerView: UIView {
         pendingCommands.removeAll()
     }
     
-    private func onResize(width: Int, height: Int) {
+    private func onResize(width: Float, height: Float) {
         webViewContainerHeightConstraint.constant = CGFloat(height)
     }
     
