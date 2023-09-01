@@ -7,7 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		F81223142A8A5627000BBBCB /* JVFloatLabeledText.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = F81223132A8A5627000BBBCB /* JVFloatLabeledText.xcframework */; };
+		F83AB1C32AA2165B00E7A2FE /* JVFloatLabeledText.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = F81223132A8A5627000BBBCB /* JVFloatLabeledText.xcframework */; };
+		F83AB1C42AA2165B00E7A2FE /* JVFloatLabeledText.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F81223132A8A5627000BBBCB /* JVFloatLabeledText.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F8A0E2352A56FF6400B6ACD3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8A0E2342A56FF6400B6ACD3 /* AppDelegate.swift */; };
 		F8A0E2372A56FF6400B6ACD3 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8A0E2362A56FF6400B6ACD3 /* SceneDelegate.swift */; };
 		F8A0E2392A56FF6400B6ACD3 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8A0E2382A56FF6400B6ACD3 /* ViewController.swift */; };
@@ -27,6 +28,7 @@
 			dstSubfolderSpec = 10;
 			files = (
 				F8A0E24B2A56FF7700B6ACD3 /* BeyondWordsPlayer.framework in Embed Frameworks */,
+				F83AB1C42AA2165B00E7A2FE /* JVFloatLabeledText.xcframework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -53,7 +55,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F8A0E24A2A56FF7700B6ACD3 /* BeyondWordsPlayer.framework in Frameworks */,
-				F81223142A8A5627000BBBCB /* JVFloatLabeledText.xcframework in Frameworks */,
+				F83AB1C32AA2165B00E7A2FE /* JVFloatLabeledText.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
