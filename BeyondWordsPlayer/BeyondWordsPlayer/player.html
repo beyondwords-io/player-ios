@@ -30,6 +30,15 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/core-js/3.30.2/minified.js"
         integrity="sha512-u60H4fcHTGKAVICDO65xbPZn/eTY9S/VkZxMBdfwkCaStJH88PELFskcCVXpAAyVsASRhyiyjP3zEVkFd/3KEA=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        var _fetch = window.fetch
+        window.fetch = function(resource, options) {
+            options = Object.assign({}, options, {
+                cache: "no-cache" 
+            })
+            return _fetch(resource, options)
+        }
+    </script>
     <script src="https://proxy.beyondwords.io/npm/@beyondwords/player@0.1.12/dist/umd.js"></script>
     <script>
         var player = null
