@@ -21,7 +21,7 @@ public class PlayerView: UIView {
     private lazy var webView = {
         let configuration = WKWebViewConfiguration()
         configuration.allowsInlineMediaPlayback = true
-        configuration.mediaTypesRequiringUserActionForPlayback = .all
+        configuration.mediaTypesRequiringUserActionForPlayback = []
         let contentController = WKUserContentController()
         contentController.add(bridge, name: bridge.name)
         configuration.userContentController = contentController
