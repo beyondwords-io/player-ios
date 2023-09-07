@@ -163,6 +163,7 @@ class ViewController: UIViewController {
         case "custom":
             let customPlayerView = CustomPlayerView()
             customPlayerView.verbose = true
+            customPlayerView.autoplay = true
             customPlayerView.load(playerSettings)
             playerView = customPlayerView
         default:

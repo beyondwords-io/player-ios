@@ -10,6 +10,8 @@ import BeyondWordsPlayer
 
 public class CustomPlayerView: UIStackView {
     
+    public var autoplay = false
+    
     public var verbose = false {
         didSet {
             playerView.verbose = verbose
@@ -117,6 +119,10 @@ extension CustomPlayerView : PlayerDelegate {
         default:
             playPauseButton.setImage(UIImage(systemName: "play"), for: .normal)
             playPauseButton.addTarget(self, action: #selector(play), for: .touchUpInside)
+        }
+        
+        if (autoplay && event.type == "MediaLoaded") {
+            playerView.setPlaybackState("playing")
         }
     }
     
