@@ -1,168 +1,180 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta name="transparent" content="true">
+  <head>
+    <meta name="transparent" content="true" />
     <meta name="viewport" content="initial-scale=1, user-scalable=no, width=device-width" />
     <style>
-        body {
-            margin: 0;
-        }
+      body {
+        margin: 0;
+      }
 
-        #player-target {
-            margin: 0 auto;
-        }
+      #player-target {
+        margin: 0 auto;
+      }
 
-        #player-target.style-video {
-            position: relative;
-            max-width: 720px !important;
-        }
+      #player-target.style-video {
+        position: relative;
+        max-width: 720px !important;
+      }
 
-        #player-target.style-small {
-            display: flex;
-            flex-direction: row;
-            justify-content: center;
-        }
+      #player-target.style-small {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+      }
     </style>
-    <script src="https://cdn.jsdelivr.net/npm/@juggle/resize-observer@4.0.0-4/lib/resize-observer.js"
-        integrity="sha256-XcFCbHkfXuguerzLm6mUYtky4uDuItfY2z1UYmSV8zY="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/core-js/3.30.2/minified.js"
-        integrity="sha512-u60H4fcHTGKAVICDO65xbPZn/eTY9S/VkZxMBdfwkCaStJH88PELFskcCVXpAAyVsASRhyiyjP3zEVkFd/3KEA=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/@juggle/resize-observer@4.0.0-4/lib/resize-observer.js"
+      integrity="sha256-XcFCbHkfXuguerzLm6mUYtky4uDuItfY2z1UYmSV8zY="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/core-js/3.30.2/minified.js"
+      integrity="sha512-u60H4fcHTGKAVICDO65xbPZn/eTY9S/VkZxMBdfwkCaStJH88PELFskcCVXpAAyVsASRhyiyjP3zEVkFd/3KEA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
     <script>
-        var _fetch = window.fetch
-        window.fetch = function(resource, options) {
-            options = Object.assign({}, options, {
-                cache: "no-cache" 
-            })
-            return _fetch(resource, options)
-        }
+      var _fetch = window.fetch;
+      window.fetch = function (resource, options) {
+        options = Object.assign({}, options, {
+          cache: "no-cache",
+        });
+        return _fetch(resource, options);
+      };
     </script>
     <script src="https://proxy.beyondwords.io/npm/@beyondwords/player@0.1.20/dist/umd.js"></script>
     <script>
-        var player = null
+      var player = null;
 
-        function load(settings) {
-            if (player !== null) {
-                player.destroy()
-                player.target.className = ''
-            }
+      function load(settings) {
+        if (player !== null) {
+          player.destroy();
+          player.target.className = "";
+        }
 
-            player = new BeyondWords.Player(Object.assign({}, settings, {
-                target: "#player-target",
-                downloadFormats: [],
-                widgetStyle: "none",
-            }))
-            player.target.classList.add('style-' + player.playerStyle)
-            player.addEventListener("<any>", function (event) {
-                window.webkit.messageHandlers.iOSBridge.postMessage(JSON.stringify({
-                    type: "event",
-                    event: getPlayerEvent(event),
-                    settings: getPlayerSettings()
-                }))
+        player = new BeyondWords.Player(
+          Object.assign({}, settings, {
+            target: "#player-target",
+            downloadFormats: [],
+            widgetStyle: "none",
+          })
+        );
+        player.target.classList.add("style-" + player.playerStyle);
+        player.addEventListener("<any>", function (event) {
+          window.webkit.messageHandlers.iOSBridge.postMessage(
+            JSON.stringify({
+              type: "event",
+              event: getPlayerEvent(event),
+              settings: getPlayerSettings(),
             })
+          );
+        });
 
-            function getPlayerEvent(event) {
-                return {
-                    id: event.id,
-                    type: event.type,
-                    description: event.description,
-                    initiatedBy: event.initiatedBy,
-                    emittedFrom: event.emittedFrom,
-                    status: event.status,
-                    createdAt: event.createdAt,
-                    processedAt: event.processedAt
-                }
-            }
-            function getPlayerSettings() {
-                return {
-                    playerApiUrl: player.playerApiUrl,
-                    projectId: player.projectId,
-                    contentId: player.contentId,
-                    playlistId: player.playlistId,
-                    sourceId: player.sourceId,
-                    sourceUrl: player.sourceUrl,
-                    playlist: player.playlist,
-                    showUserInterface: player.showUserInterface,
-                    playerStyle: player.playerStyle,
-                    playerTitle: player.playerTitle,
-                    callToAction: player.callToAction,
-                    skipButtonStyle: player.skipButtonStyle,
-                    playlistStyle: player.playlistStyle,
-                    playlistToggle: player.playlistToggle,
-                    downloadFormats: player.downloadFormats,
-                    mediaSession: player.mediaSession,
-                    content: player.content,
-                    contentIndex: player.contentIndex,
-                    introsOutros: player.introsOutros,
-                    introsOutrosIndex: player.introsOutrosIndex,
-                    adverts: player.adverts,
-                    advertIndex: player.advertIndex,
-                    persistentAdImage: player.persistentAdImage,
-                    persistentIndex: player.persistentIndex,
-                    duration: player.duration,
-                    currentTime: player.currentTime,
-                    playbackState: player.playbackState,
-                    playbackRate: player.playbackRate,
-                    widgetStyle: player.widgetStyle,
-                    widgetPosition: player.widgetPosition,
-                    widgetWidth: player.widgetWidth,
-                    textColor: player.textColor,
-                    backgroundColor: player.backgroundColor,
-                    iconColor: player.iconColor,
-                    highlightColor: player.highlightColor,
-                    logoIconEnabled: player.logoIconEnabled,
-                    highlightSections: player.highlightSections,
-                    clickableSections: player.clickableSections,
-                    segmentWidgetSections: player.segmentWidgetSections,
-                    segmentWidgetPosition: player.segmentWidgetPosition,
-                    currentSegment: player.currentSegment,
-                    hoveredSegment: player.hoveredSegment,
-                    loadedMedia: player.loadedMedia,
-                    advertConsent: player.advertConsent,
-                    analyticsConsent: player.analyticsConsent,
-                    analyticsCustomUrl: player.analyticsCustomUrl,
-                    analyticsTag: player.analyticsTag,
-                    transitions: player.transitions,
-                }
-            }
+        function getPlayerEvent(event) {
+          return {
+            id: event.id,
+            type: event.type,
+            description: event.description,
+            initiatedBy: event.initiatedBy,
+            emittedFrom: event.emittedFrom,
+            status: event.status,
+            createdAt: event.createdAt,
+            processedAt: event.processedAt,
+          };
         }
-        function setPlayerStyle(playerStyle) {
-            player.playerStyle = playerStyle
-            player.target.classList.forEach(function(c) {
-                if (c.startsWith('style-') && !c.endsWith(player.playerStyle)) {
-                    player.target.classList.remove(c)
-                }
+        function getPlayerSettings() {
+          return {
+            playerApiUrl: player.playerApiUrl,
+            projectId: player.projectId,
+            contentId: player.contentId,
+            playlistId: player.playlistId,
+            sourceId: player.sourceId,
+            sourceUrl: player.sourceUrl,
+            playlist: player.playlist,
+            showUserInterface: player.showUserInterface,
+            playerStyle: player.playerStyle,
+            playerTitle: player.playerTitle,
+            callToAction: player.callToAction,
+            skipButtonStyle: player.skipButtonStyle,
+            playlistStyle: player.playlistStyle,
+            playlistToggle: player.playlistToggle,
+            downloadFormats: player.downloadFormats,
+            mediaSession: player.mediaSession,
+            content: player.content,
+            contentIndex: player.contentIndex,
+            introsOutros: player.introsOutros,
+            introsOutrosIndex: player.introsOutrosIndex,
+            adverts: player.adverts,
+            advertIndex: player.advertIndex,
+            persistentAdImage: player.persistentAdImage,
+            persistentIndex: player.persistentIndex,
+            duration: player.duration,
+            currentTime: player.currentTime,
+            playbackState: player.playbackState,
+            playbackRate: player.playbackRate,
+            widgetStyle: player.widgetStyle,
+            widgetPosition: player.widgetPosition,
+            widgetWidth: player.widgetWidth,
+            textColor: player.textColor,
+            backgroundColor: player.backgroundColor,
+            iconColor: player.iconColor,
+            highlightColor: player.highlightColor,
+            logoIconEnabled: player.logoIconEnabled,
+            highlightSections: player.highlightSections,
+            clickableSections: player.clickableSections,
+            segmentWidgetSections: player.segmentWidgetSections,
+            segmentWidgetPosition: player.segmentWidgetPosition,
+            currentSegment: player.currentSegment,
+            hoveredSegment: player.hoveredSegment,
+            loadedMedia: player.loadedMedia,
+            advertConsent: player.advertConsent,
+            analyticsConsent: player.analyticsConsent,
+            analyticsCustomUrl: player.analyticsCustomUrl,
+            analyticsTag: player.analyticsTag,
+            transitions: player.transitions,
+          };
+        }
+      }
+      function setPlayerStyle(playerStyle) {
+        player.playerStyle = playerStyle;
+        player.target.classList.forEach(function (c) {
+          if (c.startsWith("style-") && !c.endsWith(player.playerStyle)) {
+            player.target.classList.remove(c);
+          }
+        });
+        player.target.classList.add("style-" + player.playerStyle);
+      }
+      function domContentLoaded() {
+        if (document.readyState === "complete" || document.readyState === "interactive") return Promise.resolve();
+        return new Promise(function (resolve) {
+          document.addEventListener("DOMContentLoaded", function () {
+            resolve();
+          });
+        });
+      }
+      domContentLoaded().then(function () {
+        var observer = new ResizeObserver(function (entries) {
+          window.webkit.messageHandlers.iOSBridge.postMessage(
+            JSON.stringify({
+              type: "resize",
+              width: entries[0].contentRect.width,
+              height: entries[0].contentRect.height,
             })
-            player.target.classList.add('style-' + player.playerStyle)
-        }
-        function domContentLoaded() {
-            if (document.readyState === "complete" || document.readyState === "interactive") return Promise.resolve()
-            return new Promise(function (resolve) {
-                document.addEventListener("DOMContentLoaded", function () {
-                    resolve()
-                })
-            })
-        }
-        domContentLoaded().then(function () {
-            var observer = new ResizeObserver(function (entries) {
-                window.webkit.messageHandlers.iOSBridge.postMessage(JSON.stringify({
-                    type: "resize",
-                    width: entries[0].contentRect.width,
-                    height: entries[0].contentRect.height
-                }))
-            });
-            observer.observe(document.body)
-            window.webkit.messageHandlers.iOSBridge.postMessage(JSON.stringify({
-                type: "ready"
-            }))
-        })
+          );
+        });
+        observer.observe(document.body);
+        window.webkit.messageHandlers.iOSBridge.postMessage(
+          JSON.stringify({
+            type: "ready",
+          })
+        );
+      });
     </script>
-</head>
+  </head>
 
-<body>
+  <body>
     <div id="player-target"></div>
-</body>
-
+  </body>
 </html>
