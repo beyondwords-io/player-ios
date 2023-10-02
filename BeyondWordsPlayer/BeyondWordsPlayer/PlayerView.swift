@@ -223,7 +223,7 @@ extension PlayerView {
     }
     
     public func setPlayerStyle(_ playerStyle: String) {
-        setProp("player.playerStyle", value: playerStyle)
+        callFunction("setPlayerStyle", args: [playerStyle])
     }
     
     public func setPlayerTitle(_ playerTitle: String) {
