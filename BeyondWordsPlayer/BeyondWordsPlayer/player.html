@@ -17,10 +17,33 @@
         max-width: 720px !important;
       }
 
+      html.android #player-target.style-video::after {
+        content: " ";
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        z-index: -1;
+        margin: auto;
+        width: 1px;
+        height: 1px;
+        animation: keep-webview-active 10s linear infinite;
+      }
+
       #player-target.style-small {
         display: flex;
         flex-direction: row;
         justify-content: center;
+      }
+
+      @keyframes keep-webview-active {
+        from {
+          background-color: #ffffff02;
+        }
+        to {
+          background-color: #ffffff01;
+        }
       }
     </style>
     <script
@@ -36,6 +59,45 @@
       referrerpolicy="no-referrer"
     ></script>
     <script>
+      window.os = window.webkit ? "ios" : "android";
+      document.documentElement.classList.add(window.os);
+
+      window.Bridge = {
+        onReady: function () {
+          if (window.os === "ios") {
+            window.webkit.messageHandlers.PlayerViewBridge.postMessage(JSON.stringify({ type: "ready" }));
+          } else {
+            PlayerViewBridge.onReady();
+          }
+        },
+        onResize: function (width, height) {
+          if (window.os === "ios") {
+            window.webkit.messageHandlers.PlayerViewBridge.postMessage(
+              JSON.stringify({
+                type: "resize",
+                width: width,
+                height: height,
+              })
+            );
+          } else {
+            window.PlayerViewBridge.onResize(width, height);
+          }
+        },
+        onEvent: function (event, settings) {
+          if (window.os === "ios") {
+            window.webkit.messageHandlers.PlayerViewBridge.postMessage(
+              JSON.stringify({
+                type: "event",
+                event: event,
+                settings: settings,
+              })
+            );
+          } else {
+            window.PlayerViewBridge.onEvent(JSON.stringify(event), JSON.stringify(settings));
+          }
+        },
+      };
+
       var _fetch = window.fetch;
       window.fetch = function (resource, options) {
         options = Object.assign({}, options, {
@@ -43,8 +105,53 @@
         });
         return _fetch(resource, options);
       };
+
+      if (!navigator.mediaSession && window.MediaSessionBridge) {
+        window.MediaMetadata = function (props) {
+          this.title = (props || {}).title;
+          this.artist = (props || {}).artist;
+          this.album = (props || {}).album;
+          this.artwork = (props || {}).artwork;
+        };
+        navigator.mediaSession = {
+          _metadata: null,
+          _playbackState: "none",
+          _actionHandlers: {},
+          get metadata() {
+            return navigator.mediaSession._metadata;
+          },
+          set metadata(value) {
+            navigator.mediaSession._metadata = value;
+            window.MediaSessionBridge.onMetadataChanged(
+              value.title,
+              value.artist,
+              value.album,
+              (value.artwork || []).find(function (artwork) {
+                return artwork.src.indexOf("https://") === 0;
+              }) || null
+            );
+          },
+          get playbackState() {
+            return navigator.mediaSession._playbackState;
+          },
+          set playbackState(value) {
+            navigator.mediaSession._playbackState = value;
+            window.MediaSessionBridge.onPlaybackStateChanged(value);
+          },
+          setActionHandler: function (type, callback) {
+            navigator.mediaSession._actionHandlers[type] = callback;
+            var attachedHandlerTypes = Object.keys(navigator.mediaSession._actionHandlers).filter(function (type) {
+              return !!navigator.mediaSession._actionHandlers[type];
+            });
+            window.MediaSessionBridge.onActionHandlersChanged(JSON.stringify(attachedHandlerTypes));
+          },
+          setPositionState: function (args) {
+            window.MediaSessionBridge.onPositionStateChanged(args.position, args.duration, args.playbackRate);
+          },
+        };
+      }
     </script>
-    <script src="https://proxy.beyondwords.io/npm/@beyondwords/player@0.1.20/dist/umd.js"></script>
+    <script src="https://proxy.beyondwords.io/npm/@beyondwords/player@0.1.23/dist/umd.js"></script>
     <script>
       var player = null;
 
@@ -63,15 +170,35 @@
         );
         player.target.classList.add("style-" + player.playerStyle);
         player.addEventListener("<any>", function (event) {
-          window.webkit.messageHandlers.iOSBridge.postMessage(
-            JSON.stringify({
-              type: "event",
-              event: getPlayerEvent(event),
-              settings: getPlayerSettings(),
-            })
-          );
+          window.Bridge.onEvent(getPlayerEvent(event), getPlayerSettings());
+          if (event.initiatedBy === "media-session-api") {
+            updateMediaSession(event);
+          }
         });
+        player.addEventListener("DurationUpdated", updateMediaSession);
+        player.addEventListener("PlaybackRateUpdated", updateMediaSession);
+        player.addEventListener("PlaybackEnded", updateMediaSession);
+        player.addEventListener("PlaybackPaused", updateMediaSession);
+        player.addEventListener("PlaybackPlaying", updateMediaSession);
+        player.addEventListener("PlaybackErrored", updateMediaSession);
+        if (window.os === "ios") {
+          player.addEventListener("CurrentTimeUpdated", updateMediaSession);
+        }
 
+        function updateMediaSession(event) {
+          if (window.os === "ios") {
+            if (navigator.mediaSession.metadata) {
+              navigator.mediaSession.metadata = new MediaMetadata(navigator.mediaSession.metadata);
+            }
+          } else {
+            navigator.mediaSession.playbackState = player.playbackState === "stopped" ? "none" : player.playbackState;
+            navigator.mediaSession.setPositionState({
+              position: player.currentTime,
+              duration: player.duration,
+              playbackRate: player.playbackRate,
+            });
+          }
+        }
         function getPlayerEvent(event) {
           return {
             id: event.id,
@@ -156,20 +283,10 @@
       }
       domContentLoaded().then(function () {
         var observer = new ResizeObserver(function (entries) {
-          window.webkit.messageHandlers.iOSBridge.postMessage(
-            JSON.stringify({
-              type: "resize",
-              width: entries[0].contentRect.width,
-              height: entries[0].contentRect.height,
-            })
-          );
+          Bridge.onResize(entries[0].contentRect.width, entries[0].contentRect.height);
         });
         observer.observe(document.body);
-        window.webkit.messageHandlers.iOSBridge.postMessage(
-          JSON.stringify({
-            type: "ready",
-          })
-        );
+        Bridge.onReady();
       });
     </script>
   </head>

@@ -52,7 +52,7 @@ public class PlayerView: UIView {
     }()
     
     private lazy var bridge = {
-        let bridge = Bridge("iOSBridge")
+        let bridge = Bridge("PlayerViewBridge")
         bridge.delegate = self
         return bridge
     }()
@@ -113,7 +113,7 @@ public class PlayerView: UIView {
     }
     
     private func onEvent(event: PlayerEvent, settings: PlayerSettings) {
-        if (self.verbose) { print("BeyondWordsPlayer:onEvent: \(event) \(settings)") }
+        if (self.verbose) { print("BeyondWordsPlayer:onEvent: \(event)") }
         delegate?.player(self, onEvent: event, settings: settings)
     }
     
@@ -180,7 +180,7 @@ extension PlayerView : BridgeDelegate {
         case "event":
             onEvent(event: message.event!, settings: message.settings!)
         default:
-            print("BeyondWordsPlayer:iOSBridge Unknown message received \(message.type)")
+            print("BeyondWordsPlayer:PlayerViewBridge Unknown message received \(message.type)")
         }
     }
 }
