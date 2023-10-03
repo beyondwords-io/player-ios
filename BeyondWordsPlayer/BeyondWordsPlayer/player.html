@@ -151,7 +151,7 @@
         };
       }
     </script>
-    <script src="https://proxy.beyondwords.io/npm/@beyondwords/player@0.1.23/dist/umd.js"></script>
+    <script src="https://proxy.beyondwords.io/npm/@beyondwords/player@0.1.24/dist/umd.js"></script>
     <script>
       var player = null;
 
@@ -172,9 +172,10 @@
         player.addEventListener("<any>", function (event) {
           window.Bridge.onEvent(getPlayerEvent(event), getPlayerSettings());
           if (event.initiatedBy === "media-session-api") {
-            updateMediaSession(event);
+            updateMediaSession();
           }
         });
+        player.addEventListener("MediaSeeked", updateMediaSession);
         player.addEventListener("DurationUpdated", updateMediaSession);
         player.addEventListener("PlaybackRateUpdated", updateMediaSession);
         player.addEventListener("PlaybackEnded", updateMediaSession);
@@ -185,7 +186,7 @@
           player.addEventListener("CurrentTimeUpdated", updateMediaSession);
         }
 
-        function updateMediaSession(event) {
+        function updateMediaSession() {
           if (window.os === "ios") {
             if (navigator.mediaSession.metadata) {
               navigator.mediaSession.metadata = new MediaMetadata(navigator.mediaSession.metadata);
