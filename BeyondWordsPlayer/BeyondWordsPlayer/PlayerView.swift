@@ -274,6 +274,14 @@ extension PlayerView {
         setProp("player.advertIndex", value: advertIndex)
     }
     
+    public func setMinDurationForMidroll(_ minDurationForMidroll: Float) {
+        setProp("player.minDurationForMidroll", value: minDurationForMidroll)
+    }
+
+    public func setMinTimeUntilEndForMidroll(_ minTimeUntilEndForMidroll: Float) {
+        setProp("player.minTimeUntilEndForMidroll", value: minTimeUntilEndForMidroll)
+    }
+    
     public func setPersistentAdImage(_ persistentAdImage: Bool) {
         setProp("player.persistentAdImage", value: persistentAdImage)
     }
