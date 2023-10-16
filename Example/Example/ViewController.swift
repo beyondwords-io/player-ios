@@ -37,6 +37,9 @@ class ViewController: UIViewController {
         contentView.translatesAutoresizingMaskIntoConstraints = false
         scrollView.addSubview(contentView)
         contentView.widthAnchor.constraint(equalTo: scrollView.frameLayoutGuide.widthAnchor).isActive = true
+        let heightContraint = contentView.widthAnchor.constraint(equalTo: scrollView.frameLayoutGuide.heightAnchor)
+        heightContraint.priority = .defaultLow
+        heightContraint.isActive = true
         contentView.topAnchor.constraint(equalTo: scrollView.contentLayoutGuide.topAnchor).isActive = true
         contentView.leftAnchor.constraint(equalTo: scrollView.contentLayoutGuide.leftAnchor).isActive = true
         contentView.rightAnchor.constraint(equalTo: scrollView.contentLayoutGuide.rightAnchor).isActive = true
