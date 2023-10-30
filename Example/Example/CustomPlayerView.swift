@@ -121,7 +121,7 @@ extension CustomPlayerView : PlayerDelegate {
             playPauseButton.addTarget(self, action: #selector(play), for: .touchUpInside)
         }
         
-        if (autoplay && event.type == "MediaLoaded") {
+        if (autoplay && event.type == "MetadataLoaded") {
             playerView.setPlaybackState("playing")
         }
     }
