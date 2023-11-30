@@ -45,6 +45,8 @@ public struct PlayerSettings: Codable {
     public var analyticsConsent: String? = nil
     public var analyticsCustomUrl: String? = nil
     public var analyticsTag: String? = nil
+    public var bundleIdentifier: String? = nil
+    public var vendorIdentifier: String? = nil
     
     public struct Identifier: Codable {
         public var contentId: String? = nil

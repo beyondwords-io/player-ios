@@ -187,7 +187,10 @@ extension PlayerView : BridgeDelegate {
 
 extension PlayerView {
     public func load(_ playerSettings: PlayerSettings) {
-        callFunction("load", args: [playerSettings])
+        var playerSettingsCopy = playerSettings
+        playerSettingsCopy.bundleIdentifier = Bundle.main.bundleIdentifier
+        playerSettingsCopy.vendorIdentifier = UIDevice.current.identifierForVendor?.uuidString
+        callFunction("load", args: [playerSettingsCopy])
     }
     
     public func setPlayerApiUrl(_ playerApiUrl: String) {
