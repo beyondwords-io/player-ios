@@ -17,7 +17,7 @@ jobs:
       - name: List Xcode versions
         run: ls -ld /Applications/Xcode*.app
       - name: Setup Xcode
-        run: sudo xcode-select -switch /Applications/Xcode_14.2.app
+        run: sudo xcode-select -switch /Applications/Xcode_15.4.app
       - name: Archive framework for iPhone simulator
         run: |
           xcodebuild archive \
