@@ -221,6 +221,10 @@ extension PlayerView {
         setProp("player.playlist", value: playlist)
     }
     
+    public func setLoadContentAs(_ loadContentAs: [String]) {
+        setProp("player.loadContentAs", value: loadContentAs)
+    }
+    
     public func setShowUserInterface(_ showUserInterface: Bool) {
         setProp("player.showUserInterface", value: showUserInterface)
     }
