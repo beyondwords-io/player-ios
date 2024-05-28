@@ -7,7 +7,7 @@ To publish the cocoapod package you must set a `COCOAPODS_TRUNK_TOKEN` GitHub se
 To obtain that token you must login in the cocoapods CLI
 
 ```bash
-pod trunk register xxxx@beyondwords.io 'Your Name' --description='macbook pro'
+pod trunk register tech@beyondwords.io 'Your Name' --description='macbook pro'
 ```
 
 Copy the value of the Authorization header
