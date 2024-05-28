@@ -1,0 +1,35 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  CI:
+    runs-on: macos-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: List Xcode versions
+        run: ls -ld /Applications/Xcode*.app
+      - name: Setup Xcode
+        run: sudo xcode-select -switch /Applications/Xcode_15.4.app
+      - name: Archive framework for iPhone simulator
+        run: |
+          xcodebuild archive \
+            -scheme BeyondWordsPlayer \
+            -configuration Release \
+            -sdk iphonesimulator \
+            -archivePath './build/BeyondWordsPlayer.framework-iphonesimulator.xcarchive' \
+            BUILD_LIBRARY_FOR_DISTRIBUTION=YES \
+            SKIP_INSTALL=NO
+      - name: Archive framework for iPhone
+        run: |
+          xcodebuild archive \
+            -scheme BeyondWordsPlayer \
+            -configuration Release \
+            -sdk iphoneos \
+            -archivePath "./build/BeyondWordsPlayer.framework-iphoneos.xcarchive" \
+            BUILD_LIBRARY_FOR_DISTRIBUTION=YES \
+            SKIP_INSTALL=NO
