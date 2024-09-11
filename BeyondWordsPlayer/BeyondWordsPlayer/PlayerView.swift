@@ -193,6 +193,10 @@ extension PlayerView {
         callFunction("load", args: [playerSettingsCopy])
     }
     
+    public func destroy() {
+        callFunction("destroy", args: [])
+    }
+    
     public func setPlayerApiUrl(_ playerApiUrl: String) {
         setProp("player.playerApiUrl", value: playerApiUrl)
     }
