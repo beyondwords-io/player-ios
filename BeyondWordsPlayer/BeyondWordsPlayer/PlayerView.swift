@@ -225,6 +225,10 @@ extension PlayerView {
         setProp("player.playlist", value: playlist)
     }
     
+    public func setSummary(_ summary: Bool) {
+        setProp("player.summary", value: summary)
+    }
+    
     public func setLoadContentAs(_ loadContentAs: [String]) {
         setProp("player.loadContentAs", value: loadContentAs)
     }
