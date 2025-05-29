@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name           = 'BeyondWordsPlayer'
-  s.version        = '0.1.15'
+  s.version        = '0.1.16'
   s.summary        = 'The BeyondWords Player for iOS.'
   s.description    = 'A wrapper around the BeyondWords web player: https://github.com/beyondWords-io/player'
   s.homepage       = 'https://github.com/beyondwords-io/player-ios'
