@@ -166,7 +166,8 @@ class ViewController: UIViewController {
         case "custom":
             let customPlayerView = CustomPlayerView()
             customPlayerView.verbose = true
-            customPlayerView.autoplay = true
+            // Uncomment to enable autoplay
+            // customPlayerView.autoplay = true
             customPlayerView.load(playerSettings)
             playerView = customPlayerView
         default:
