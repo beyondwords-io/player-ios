@@ -24,11 +24,39 @@ public class CustomPlayerView: UIStackView {
         return playerView
     }()
     
-    private lazy var playPauseButton = {
-        let playPauseButton = UIButton()
-        playPauseButton.setImage(UIImage(systemName: "play"), for: .normal)
-        playPauseButton.isEnabled = false
-        return playPauseButton
+    private lazy var errorView = {
+        let errorView = UILabel()
+        errorView.numberOfLines = 5
+        errorView.font = errorView.font.withSize(18)
+        errorView.textColor = UIColor.red
+        return errorView
+    }()
+    
+    private lazy var spinnerView = {
+        let spinnerView = UIActivityIndicatorView(style: .large)
+        return spinnerView;
+    }()
+    
+    private lazy var controlBar = {
+        let controlBar = UIStackView()
+        controlBar.distribution = .fill
+        controlBar.axis = .vertical
+        controlBar.backgroundColor = UIColor.lightGray.withAlphaComponent(0.2)
+        return controlBar
+    }()
+    
+    private lazy var playButton = {
+        let playButton = UIButton()
+        playButton.setImage(UIImage(systemName: "play"), for: .normal)
+        playButton.addTarget(self, action: #selector(play), for: .touchUpInside)
+        return playButton
+    }()
+    
+    private lazy var pauseButton = {
+        let pauseButton = UIButton()
+        pauseButton.setImage(UIImage(systemName: "pause"), for: .normal)
+        pauseButton.addTarget(self, action: #selector(pause), for: .touchUpInside)
+        return pauseButton
     }()
     
     private lazy var contentTitleView = {
@@ -47,46 +75,64 @@ public class CustomPlayerView: UIStackView {
     
     override init(frame: CGRect) {
         super.init(frame: .zero)
-        commonInit()
+        setupUI()
     }
     
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        commonInit()
+        setupUI()
     }
     
-    private func commonInit() {
+    private func setupUI() {
         distribution = .fill
         axis = .vertical
         
         playerView.translatesAutoresizingMaskIntoConstraints = false
         addArrangedSubview(playerView)
         
-        let controlBar = UIView()
+        spinnerView.isHidden = false;
+        spinnerView.translatesAutoresizingMaskIntoConstraints = false
+        addArrangedSubview(spinnerView)
+        spinnerView.heightAnchor.constraint(equalToConstant: 60).isActive = true
+        spinnerView.startAnimating()
+        
+        errorView.isHidden = true
+        errorView.translatesAutoresizingMaskIntoConstraints = false
+        addArrangedSubview(errorView)
+        
+        controlBar.isHidden = true
         controlBar.translatesAutoresizingMaskIntoConstraints = false
         addArrangedSubview(controlBar)
         controlBar.heightAnchor.constraint(equalToConstant: 60).isActive = true
-        controlBar.backgroundColor = UIColor.lightGray.withAlphaComponent(0.2)
         
-        playPauseButton.translatesAutoresizingMaskIntoConstraints = false
-        addSubview(playPauseButton)
-        playPauseButton.topAnchor.constraint(equalTo: controlBar.topAnchor).isActive = true
-        playPauseButton.leftAnchor.constraint(equalTo: controlBar.leftAnchor).isActive = true
-        playPauseButton.bottomAnchor.constraint(equalTo: controlBar.bottomAnchor).isActive = true
-        playPauseButton.widthAnchor.constraint(equalTo: controlBar.heightAnchor).isActive = true
+        playButton.isHidden = false
+        playButton.translatesAutoresizingMaskIntoConstraints = false
+        controlBar.addArrangedSubview(playButton)
+        playButton.topAnchor.constraint(equalTo: controlBar.topAnchor).isActive = true
+        playButton.leftAnchor.constraint(equalTo: controlBar.leftAnchor).isActive = true
+        playButton.bottomAnchor.constraint(equalTo: controlBar.bottomAnchor).isActive = true
+        playButton.widthAnchor.constraint(equalTo: controlBar.heightAnchor).isActive = true
+        
+        pauseButton.isHidden = true
+        pauseButton.translatesAutoresizingMaskIntoConstraints = false
+        controlBar.addArrangedSubview(pauseButton)
+        pauseButton.topAnchor.constraint(equalTo: controlBar.topAnchor).isActive = true
+        pauseButton.leftAnchor.constraint(equalTo: controlBar.leftAnchor).isActive = true
+        pauseButton.bottomAnchor.constraint(equalTo: controlBar.bottomAnchor).isActive = true
+        pauseButton.widthAnchor.constraint(equalTo: controlBar.heightAnchor).isActive = true
         
         contentTitleView.translatesAutoresizingMaskIntoConstraints = false
-        addSubview(contentTitleView)
+        controlBar.addArrangedSubview(contentTitleView)
         contentTitleView.topAnchor.constraint(equalTo: controlBar.topAnchor).isActive = true
         contentTitleView.rightAnchor.constraint(equalTo: controlBar.rightAnchor).isActive = true
-        contentTitleView.leftAnchor.constraint(equalTo: playPauseButton.rightAnchor).isActive = true
+        contentTitleView.leftAnchor.constraint(equalTo: controlBar.leftAnchor, constant: 60).isActive = true
         contentTitleView.heightAnchor.constraint(equalTo: controlBar.heightAnchor, multiplier: 0.5).isActive = true
         
         playerTitleView.translatesAutoresizingMaskIntoConstraints = false
-        addSubview(playerTitleView)
+        controlBar.addArrangedSubview(playerTitleView)
         playerTitleView.bottomAnchor.constraint(equalTo: controlBar.bottomAnchor).isActive = true
         playerTitleView.rightAnchor.constraint(equalTo: controlBar.rightAnchor).isActive = true
-        playerTitleView.leftAnchor.constraint(equalTo: playPauseButton.rightAnchor).isActive = true
+        playerTitleView.leftAnchor.constraint(equalTo: controlBar.leftAnchor, constant: 60).isActive = true
         playerTitleView.heightAnchor.constraint(equalTo: controlBar.heightAnchor, multiplier: 0.5).isActive = true
     }
     
@@ -111,18 +157,31 @@ extension CustomPlayerView : PlayerDelegate {
         
         playerTitleView.text = settings.playerTitle
         
-        playPauseButton.isEnabled = true
         switch settings.playbackState {
         case "playing":
-            playPauseButton.setImage(UIImage(systemName: "pause"), for: .normal)
-            playPauseButton.addTarget(self, action: #selector(pause), for: .touchUpInside)
+            playButton.isHidden = true
+            pauseButton.isHidden = false
         default:
-            playPauseButton.setImage(UIImage(systemName: "play"), for: .normal)
-            playPauseButton.addTarget(self, action: #selector(play), for: .touchUpInside)
+            playButton.isHidden = false
+            pauseButton.isHidden = true
         }
         
-        if (autoplay && event.type == "MetadataLoaded") {
-            playerView.setPlaybackState("playing")
+        if (event.type == "MetadataLoaded") {
+            spinnerView.isHidden = true
+            spinnerView.stopAnimating()
+            errorView.isHidden = true
+            controlBar.isHidden = false
+            if (autoplay) {
+                playerView.setPlaybackState("playing")
+            }
+        }
+        
+        if (event.type == "NoContentAvailable" || event.type == "PlaybackErrored") {
+            spinnerView.isHidden = true
+            spinnerView.stopAnimating()
+            errorView.isHidden = false
+            errorView.text = event.description
+            controlBar.isHidden = true
         }
     }
     
