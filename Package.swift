@@ -16,7 +16,10 @@ let package = Package(
     targets: [
         .target(
             name: "BeyondWordsPlayer",
-            path: "BeyondWordsPlayer/BeyondWordsPlayer"
+            path: "BeyondWordsPlayer/BeyondWordsPlayer",
+            resources: [
+                .process("player.html")
+            ]
         )
     ]
 )
