@@ -196,6 +196,7 @@ extension PlayerView {
         var playerSettingsCopy = playerSettings
         playerSettingsCopy.bundleIdentifier = Bundle.main.bundleIdentifier
         playerSettingsCopy.vendorIdentifier = UIDevice.current.identifierForVendor?.uuidString
+        playerSettingsCopy.playbackRates = playerSettingsCopy.playbackRates ?? [0.5, 0.6, 0.7, 0.8, 0.9, 1, 1.1, 1.2, 1.3, 1.4, 1.5, 2]
         callFunction("load", args: [playerSettingsCopy])
     }
     
