@@ -323,6 +323,10 @@ extension PlayerView {
         setProp("player.playbackRate", value: playbackRate)
     }
     
+    public func setPlaybackRates(_ playbackRates: [Float]) {
+        setProp("player.playbackRates", value: playbackRates)
+    }
+    
     public func setTextColor(_ textColor: String) {
         setProp("player.textColor", value: textColor)
     }
