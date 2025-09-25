@@ -204,6 +204,10 @@ extension PlayerView {
         callFunction("destroy", args: [])
     }
     
+    public func setCurrentSegment(segmentMarker: String? = nil, segmentXPath: String? = nil, segmentMD5: String? = nil) {
+        callFunction("setCurrentSegment", args: [segmentMarker, segmentXPath, segmentMD5])
+    }
+    
     public func setPlayerApiUrl(_ playerApiUrl: String) {
         setProp("player.playerApiUrl", value: playerApiUrl)
     }
