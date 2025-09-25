@@ -22,6 +22,8 @@ class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        view.backgroundColor = .systemBackground
+        
         let scrollView = UIScrollView()
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(scrollView)
@@ -61,6 +63,16 @@ class MainViewController: UIViewController {
         button.translatesAutoresizingMaskIntoConstraints = false
         contentView.addArrangedSubview(button)
         button.addTarget(self, action: #selector(load), for: .touchUpInside)
+        
+        let playFromParagraphButton = UIButton(type: .system)
+        playFromParagraphButton.setTitle("Play from paragraph demo", for: .normal)
+        playFromParagraphButton.setTitleColor(.black, for: .normal)
+        playFromParagraphButton.layer.cornerRadius = 4
+        playFromParagraphButton.layer.borderWidth = 1
+        playFromParagraphButton.layer.borderColor = UIColor.lightGray.cgColor
+        playFromParagraphButton.translatesAutoresizingMaskIntoConstraints = false
+        contentView.addArrangedSubview(playFromParagraphButton)
+        playFromParagraphButton.addTarget(self, action: #selector(goToPlayFromParagraphDemo), for: .touchUpInside)
 
         let playerViewContainer = UIStackView()
         playerViewContainer.distribution = .fill
@@ -143,6 +155,13 @@ class MainViewController: UIViewController {
         }))
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         self.present(alert, animated: true, completion: nil)
+    }
+    
+    @objc func goToPlayFromParagraphDemo() {
+        let playFromParagraphViewController = PlayFromParagraphViewController()
+        playFromParagraphViewController.title = "Play from paragraph"
+        guard let navController = self.navigationController else { return }
+        navController.pushViewController(playFromParagraphViewController, animated: true)
     }
     
     @objc func load() {
