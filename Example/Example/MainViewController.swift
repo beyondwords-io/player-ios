@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  MainViewController.swift
 //  Example
 //
 //  Created by Nikola Hristov on 6.07.23.
@@ -9,7 +9,7 @@ import UIKit
 import BeyondWordsPlayer
 import JVFloatLabeledText
 
-class ViewController: UIViewController {
+class MainViewController: UIViewController {
     
     private weak var projectIdInput: UITextView!
     private weak var contentIdInput: UITextView!
