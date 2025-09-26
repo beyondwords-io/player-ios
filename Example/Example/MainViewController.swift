@@ -63,16 +63,16 @@ class MainViewController: UIViewController {
         button.translatesAutoresizingMaskIntoConstraints = false
         contentView.addArrangedSubview(button)
         button.addTarget(self, action: #selector(load), for: .touchUpInside)
-        
-        let playFromParagraphButton = UIButton(type: .system)
-        playFromParagraphButton.setTitle("Play from paragraph demo", for: .normal)
-        playFromParagraphButton.setTitleColor(.black, for: .normal)
-        playFromParagraphButton.layer.cornerRadius = 4
-        playFromParagraphButton.layer.borderWidth = 1
-        playFromParagraphButton.layer.borderColor = UIColor.lightGray.cgColor
-        playFromParagraphButton.translatesAutoresizingMaskIntoConstraints = false
-        contentView.addArrangedSubview(playFromParagraphButton)
-        playFromParagraphButton.addTarget(self, action: #selector(goToPlayFromParagraphDemo), for: .touchUpInside)
+
+        let playbackFromSegmentsButton = UIButton(type: .system)
+        playbackFromSegmentsButton.setTitle("Playback from segments demo", for: .normal)
+        playbackFromSegmentsButton.setTitleColor(.black, for: .normal)
+        playbackFromSegmentsButton.layer.cornerRadius = 4
+        playbackFromSegmentsButton.layer.borderWidth = 1
+        playbackFromSegmentsButton.layer.borderColor = UIColor.lightGray.cgColor
+        playbackFromSegmentsButton.translatesAutoresizingMaskIntoConstraints = false
+        contentView.addArrangedSubview(playbackFromSegmentsButton)
+        playbackFromSegmentsButton.addTarget(self, action: #selector(goToPlaybackFromSegmentsDemo), for: .touchUpInside)
 
         let playerViewContainer = UIStackView()
         playerViewContainer.distribution = .fill
@@ -156,12 +156,12 @@ class MainViewController: UIViewController {
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         self.present(alert, animated: true, completion: nil)
     }
-    
-    @objc func goToPlayFromParagraphDemo() {
-        let playFromParagraphViewController = PlayFromParagraphViewController()
-        playFromParagraphViewController.title = "Play from paragraph"
+
+    @objc func goToPlaybackFromSegmentsDemo() {
+        let playbackFromSegmentsViewController = PlaybackFromSegmentsViewController()
+        playbackFromSegmentsViewController.title = "Playback from segments"
         guard let navController = self.navigationController else { return }
-        navController.pushViewController(playFromParagraphViewController, animated: true)
+        navController.pushViewController(playbackFromSegmentsViewController, animated: true)
     }
     
     @objc func load() {

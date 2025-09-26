@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		55A72B432E85362900AF68D1 /* PlayFromParagraphViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A72B422E85362900AF68D1 /* PlayFromParagraphViewController.swift */; };
+		55A72B432E85362900AF68D1 /* PlaybackFromSegmentsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A72B422E85362900AF68D1 /* PlaybackFromSegmentsViewController.swift */; };
 		F83AB1C32AA2165B00E7A2FE /* JVFloatLabeledText.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = F81223132A8A5627000BBBCB /* JVFloatLabeledText.xcframework */; };
 		F83AB1C42AA2165B00E7A2FE /* JVFloatLabeledText.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F81223132A8A5627000BBBCB /* JVFloatLabeledText.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F8A0E2352A56FF6400B6ACD3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8A0E2342A56FF6400B6ACD3 /* AppDelegate.swift */; };
@@ -36,7 +36,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		55A72B422E85362900AF68D1 /* PlayFromParagraphViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayFromParagraphViewController.swift; sourceTree = "<group>"; };
+		55A72B422E85362900AF68D1 /* PlaybackFromSegmentsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaybackFromSegmentsViewController.swift; sourceTree = "<group>"; };
 		F81223132A8A5627000BBBCB /* JVFloatLabeledText.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = JVFloatLabeledText.xcframework; sourceTree = "<group>"; };
 		F8A0E2312A56FF6400B6ACD3 /* Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F8A0E2342A56FF6400B6ACD3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -82,7 +82,7 @@
 		F8A0E2332A56FF6400B6ACD3 /* Example */ = {
 			isa = PBXGroup;
 			children = (
-				55A72B422E85362900AF68D1 /* PlayFromParagraphViewController.swift */,
+				55A72B422E85362900AF68D1 /* PlaybackFromSegmentsViewController.swift */,
 				F8A0E2342A56FF6400B6ACD3 /* AppDelegate.swift */,
 				F8A0E2362A56FF6400B6ACD3 /* SceneDelegate.swift */,
 				F8A0E2382A56FF6400B6ACD3 /* MainViewController.swift */,
@@ -178,7 +178,7 @@
 				F8A0E2392A56FF6400B6ACD3 /* MainViewController.swift in Sources */,
 				F8A0E2352A56FF6400B6ACD3 /* AppDelegate.swift in Sources */,
 				F8A0E2372A56FF6400B6ACD3 /* SceneDelegate.swift in Sources */,
-				55A72B432E85362900AF68D1 /* PlayFromParagraphViewController.swift in Sources */,
+				55A72B432E85362900AF68D1 /* PlaybackFromSegmentsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

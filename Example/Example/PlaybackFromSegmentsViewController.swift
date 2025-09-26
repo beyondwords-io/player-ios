@@ -1,5 +1,5 @@
 //
-//  PlayFromParagraphViewController.swift
+//  PlaybackFromSegmentsViewController.swift
 //  Example
 //
 //  Created by Nikola Hristov on 25.09.25.
@@ -8,7 +8,7 @@
 import UIKit
 import BeyondWordsPlayer
 
-class PlayFromParagraphViewController: UIViewController {
+class PlaybackFromSegmentsViewController: UIViewController {
 
     private weak var playerView: PlayerView!
     private weak var firstSegmentLabel: UILabel!
@@ -109,7 +109,7 @@ class PlayFromParagraphViewController: UIViewController {
     }
 }
 
-extension PlayFromParagraphViewController : PlayerDelegate {
+extension PlaybackFromSegmentsViewController : PlayerDelegate {
     public func player(_ playerView: PlayerView, onEvent event: PlayerEvent, settings: PlayerSettings) {
         if (self.playerView !== playerView) { return }
         
