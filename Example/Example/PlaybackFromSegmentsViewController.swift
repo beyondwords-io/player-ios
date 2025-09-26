@@ -10,10 +10,13 @@ import BeyondWordsPlayer
 
 class PlaybackFromSegmentsViewController: UIViewController {
 
+    private weak var contentView: UIStackView!
     private weak var playerView: PlayerView!
-    private weak var firstSegmentLabel: UILabel!
-    private weak var secondSegmentLabel: UILabel!
-    private weak var thirdSegmentLabel: UILabel!
+    private var segments: [String: String] = [
+        "ce3811c3-46e0-4007-88ae-231e2a019564": "Twenty-five years ago, concerns over the millennium bug led to fears of widespread digital failures, but the actual impact was minimal; today, however, a new threat looms with the rise of quantum computing, which could easily crack existing encryption algorithms.",
+        "ed331186-cd55-41c3-a524-96789ad99b39": "Quantum computers operate using qubits, allowing them to perform complex calculations much faster than classical computers, potentially compromising the security of sensitive data across various sectors, including finance and personal information.",
+        "693e0c4e-ca13-4274-8dd0-c957950a91cf": "While quantum computers capable of breaking current encryption are still years away, the technology industry is proactively developing post-quantum encryption standards to secure digital information, emphasizing the need for a comprehensive upgrade of existing systems to mitigate future risks."
+    ]
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,6 +37,7 @@ class PlaybackFromSegmentsViewController: UIViewController {
         contentView.axis = .vertical
         contentView.translatesAutoresizingMaskIntoConstraints = false
         scrollView.addSubview(contentView)
+        self.contentView = contentView
         contentView.widthAnchor.constraint(equalTo: scrollView.frameLayoutGuide.widthAnchor).isActive = true
         let heightContraint = contentView.widthAnchor.constraint(equalTo: scrollView.frameLayoutGuide.heightAnchor)
         heightContraint.priority = .defaultLow
@@ -66,46 +70,23 @@ class PlaybackFromSegmentsViewController: UIViewController {
         playerView.translatesAutoresizingMaskIntoConstraints = false
         playerViewContainer.addArrangedSubview(playerView)
         self.playerView = playerView
-
-        let firstSegmentLabel = UILabel()
-        firstSegmentLabel.text = "Twenty-five years ago, concerns over the millennium bug led to fears of widespread digital failures, but the actual impact was minimal; today, however, a new threat looms with the rise of quantum computing, which could easily crack existing encryption algorithms."
-        firstSegmentLabel.font = .systemFont(ofSize: 18)
-        firstSegmentLabel.numberOfLines = 0
-        firstSegmentLabel.translatesAutoresizingMaskIntoConstraints = false
-        firstSegmentLabel.isUserInteractionEnabled = true
-        firstSegmentLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(segmentTapped(_:))))
-        contentView.addArrangedSubview(firstSegmentLabel)
-        self.firstSegmentLabel = firstSegmentLabel
-
-        let secondSegmentLabel = UILabel()
-        secondSegmentLabel.text = "Quantum computers operate using qubits, allowing them to perform complex calculations much faster than classical computers, potentially compromising the security of sensitive data across various sectors, including finance and personal information."
-        secondSegmentLabel.font = .systemFont(ofSize: 18)
-        secondSegmentLabel.numberOfLines = 0
-        secondSegmentLabel.translatesAutoresizingMaskIntoConstraints = false
-        secondSegmentLabel.isUserInteractionEnabled = true
-        secondSegmentLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(segmentTapped(_:))))
-        contentView.addArrangedSubview(secondSegmentLabel)
-        self.secondSegmentLabel = secondSegmentLabel
-
-        let thirdSegmentLabel = UILabel()
-        thirdSegmentLabel.text = "While quantum computers capable of breaking current encryption are still years away, the technology industry is proactively developing post-quantum encryption standards to secure digital information, emphasizing the need for a comprehensive upgrade of existing systems to mitigate future risks."
-        thirdSegmentLabel.font = .systemFont(ofSize: 18)
-        thirdSegmentLabel.numberOfLines = 0
-        thirdSegmentLabel.translatesAutoresizingMaskIntoConstraints = false
-        thirdSegmentLabel.isUserInteractionEnabled = true
-        thirdSegmentLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(segmentTapped(_:))))
-        contentView.addArrangedSubview(thirdSegmentLabel)
-        self.thirdSegmentLabel = thirdSegmentLabel
+        
+        for (_, text) in self.segments {
+            let segmentLabel = UILabel()
+            segmentLabel.text = text
+            segmentLabel.font = .systemFont(ofSize: 18)
+            segmentLabel.numberOfLines = 0
+            segmentLabel.translatesAutoresizingMaskIntoConstraints = false
+            segmentLabel.isUserInteractionEnabled = true
+            segmentLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(segmentTapped(_:))))
+            contentView.addArrangedSubview(segmentLabel)
+        }
     }
     
     @objc private func segmentTapped(_ gesture: UITapGestureRecognizer) {
-        if (gesture.view === self.firstSegmentLabel) {
-            playerView.setCurrentSegment(segmentMarker: "ce3811c3-46e0-4007-88ae-231e2a019564")
-        } else if (gesture.view === self.secondSegmentLabel) {
-            playerView.setCurrentSegment(segmentMarker: "ed331186-cd55-41c3-a524-96789ad99b39")
-        } else if (gesture.view === self.thirdSegmentLabel) {
-            playerView.setCurrentSegment(segmentMarker: "693e0c4e-ca13-4274-8dd0-c957950a91cf")
-        }
+        guard let label = gesture.view as? UILabel else { return }
+        guard let marker = self.segments.first(where: { $0.value == label.text })?.key else { return }
+        playerView.setCurrentSegment(segmentMarker: marker)
     }
 }
 
@@ -114,15 +95,14 @@ extension PlaybackFromSegmentsViewController : PlayerDelegate {
         if (self.playerView !== playerView) { return }
         
         if (event.type == "CurrentSegmentUpdated") {
-            self.firstSegmentLabel.backgroundColor = .clear;
-            self.secondSegmentLabel.backgroundColor = .clear;
-            self.thirdSegmentLabel.backgroundColor = .clear;
-            if (settings.currentSegment?.marker == "ce3811c3-46e0-4007-88ae-231e2a019564") {
-                self.firstSegmentLabel.backgroundColor = .lightGray
-            } else if (settings.currentSegment?.marker == "ed331186-cd55-41c3-a524-96789ad99b39") {
-                self.secondSegmentLabel.backgroundColor = .lightGray
-            } else if (settings.currentSegment?.marker == "693e0c4e-ca13-4274-8dd0-c957950a91cf") {
-                self.thirdSegmentLabel.backgroundColor = .lightGray
+            let text = settings.currentSegment?.marker.flatMap { self.segments[$0] }
+            for view in self.contentView.arrangedSubviews {
+                guard let label = view as? UILabel else { continue }
+                if (label.text == text) {
+                    label.backgroundColor = .lightGray
+                } else {
+                    label.backgroundColor = .clear
+                }
             }
         }
     }
