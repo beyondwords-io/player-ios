@@ -14,11 +14,11 @@ public class PlayerView: UIView {
     
     public var verbose = false
     
-    private lazy var webViewContainer = {
+    public lazy var webViewContainer = {
         UIView()
     }()
     
-    private lazy var webView = {
+    public lazy var webView = {
         let configuration = WKWebViewConfiguration()
         configuration.allowsInlineMediaPlayback = true
         configuration.mediaTypesRequiringUserActionForPlayback = []
