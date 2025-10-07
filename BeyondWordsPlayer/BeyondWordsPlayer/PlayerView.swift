@@ -26,9 +26,12 @@ public class PlayerView: UIView {
         contentController.add(bridge, name: bridge.name)
         configuration.userContentController = contentController
         let webView = WKWebView(frame: .zero, configuration: configuration)
+        webView.isOpaque = false
+        webView.backgroundColor = .clear
         webView.navigationDelegate = self
         webView.scrollView.bounces = false
         webView.scrollView.isScrollEnabled = false
+        webView.scrollView.backgroundColor = .clear
         if #available(iOS 16.4, *) {
 #if DEBUG
             webView.isInspectable = true
