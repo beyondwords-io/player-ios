@@ -52,6 +52,7 @@ public struct PlayerSettings: Codable {
     public var analyticsConsent: String? = nil
     public var analyticsCustomUrl: String? = nil
     public var analyticsTag: String? = nil
+    public var mediaCustomUrl: String? = nil
     public var bundleIdentifier: String? = nil
     public var vendorIdentifier: String? = nil
     
@@ -203,7 +204,7 @@ public struct PlayerSettings: Codable {
         }
     }
     
-    public init(playerApiUrl: String? = nil, projectId: Int? = nil, contentId: String? = nil, playlistId: Int? = nil, sourceId: String? = nil, sourceUrl: String? = nil, playlist: [Identifier]? = nil, summary: Bool? = nil, loadContentAs: [String]? = nil, contentVariant: String? = nil, videoSizes: [String]? = nil, showUserInterface: Bool? = nil, playerStyle: String? = nil, playerTitle: String? = nil, callToAction: String? = nil, skipButtonStyle: String? = nil, playlistStyle: String? = nil, playlistToggle: String? = nil, mediaSession: String? = nil, content: [Content]? = nil, contentIndex: Int? = nil, introsOutros: [IntroOutro]? = nil, introsOutrosIndex: Int? = nil, adverts: [Advert]? = nil, advertIndex: Int? = nil, minDurationForMidroll: Float? = nil, minTimeUntilEndForMidroll: Float? = nil, persistentAdImage: Bool? = nil, persistentIndex: Int? = nil, duration: Float? = nil, currentTime: Float? = nil, playbackState: String? = nil, playbackRate: Float? = nil, playbackRates: [Float]? = nil, textColor: String? = nil, backgroundColor: String? = nil, iconColor: String? = nil, logoIconEnabled: Bool? = nil, currentSegment: Segment? = nil, widgetPosition: String? = nil, widgetStyle: String? = nil, loadedMedia: Media? = nil, advertConsent: String? = nil, analyticsConsent: String? = nil, analyticsCustomUrl: String? = nil, analyticsTag: String? = nil, bundleIdentifier: String? = nil, vendorIdentifier: String? = nil) {
+    public init(playerApiUrl: String? = nil, projectId: Int? = nil, contentId: String? = nil, playlistId: Int? = nil, sourceId: String? = nil, sourceUrl: String? = nil, playlist: [Identifier]? = nil, summary: Bool? = nil, loadContentAs: [String]? = nil, contentVariant: String? = nil, videoSizes: [String]? = nil, showUserInterface: Bool? = nil, playerStyle: String? = nil, playerTitle: String? = nil, callToAction: String? = nil, skipButtonStyle: String? = nil, playlistStyle: String? = nil, playlistToggle: String? = nil, mediaSession: String? = nil, content: [Content]? = nil, contentIndex: Int? = nil, introsOutros: [IntroOutro]? = nil, introsOutrosIndex: Int? = nil, adverts: [Advert]? = nil, advertIndex: Int? = nil, minDurationForMidroll: Float? = nil, minTimeUntilEndForMidroll: Float? = nil, persistentAdImage: Bool? = nil, persistentIndex: Int? = nil, duration: Float? = nil, currentTime: Float? = nil, playbackState: String? = nil, playbackRate: Float? = nil, playbackRates: [Float]? = nil, textColor: String? = nil, backgroundColor: String? = nil, iconColor: String? = nil, logoIconEnabled: Bool? = nil, currentSegment: Segment? = nil, widgetPosition: String? = nil, widgetStyle: String? = nil, loadedMedia: Media? = nil, advertConsent: String? = nil, analyticsConsent: String? = nil, analyticsCustomUrl: String? = nil, analyticsTag: String? = nil, mediaCustomUrl: String? = nil, bundleIdentifier: String? = nil, vendorIdentifier: String? = nil) {
         self.playerApiUrl = playerApiUrl
         self.projectId = projectId
         self.contentId = contentId
@@ -250,6 +251,7 @@ public struct PlayerSettings: Codable {
         self.analyticsConsent = analyticsConsent
         self.analyticsCustomUrl = analyticsCustomUrl
         self.analyticsTag = analyticsTag
+        self.mediaCustomUrl = mediaCustomUrl
         self.bundleIdentifier = bundleIdentifier
         self.vendorIdentifier = vendorIdentifier
     }
