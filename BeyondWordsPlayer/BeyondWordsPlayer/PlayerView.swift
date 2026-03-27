@@ -287,6 +287,10 @@ extension PlayerView {
         setProp("player.contentIndex", value: contentIndex)
     }
     
+    public func setContinuousPlaybackMode(_ continuousPlaybackMode: String) {
+        setProp("player.continuousPlaybackMode", value: continuousPlaybackMode)
+    }
+
     public func setIntrosOutros(_ introsOutros: [PlayerSettings.IntroOutro]) {
         setProp("player.introsOutros", value: introsOutros)
     }
