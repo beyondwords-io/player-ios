@@ -366,6 +366,10 @@ extension PlayerView {
     public func setAnalyticsTag(_ analyticsTag: String) {
         setProp("player.analyticsTag", value: analyticsTag)
     }
+
+    public func setMediaCustomUrl(_ mediaCustomUrl: String) {
+        setProp("player.mediaCustomUrl", value: mediaCustomUrl)
+    }
     
     public func setCaptureErrors(_ captureErrors: Bool) {
         setProp("player.captureErrors", value: captureErrors)
