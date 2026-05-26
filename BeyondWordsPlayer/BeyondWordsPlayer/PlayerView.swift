@@ -235,6 +235,14 @@ extension PlayerView {
         setProp("player.sourceUrl", value: sourceUrl)
     }
     
+    public func setAccessTier(_ accessTier: String) {
+        setProp("player.accessTier", value: accessTier)
+    }
+
+    public func setSegmentLimit(_ segmentLimit: Int) {
+        setProp("player.segmentLimit", value: segmentLimit)
+    }
+
     public func setPlaylist(_ playlist: [PlayerSettings.Identifier]) {
         setProp("player.playlist", value: playlist)
     }
