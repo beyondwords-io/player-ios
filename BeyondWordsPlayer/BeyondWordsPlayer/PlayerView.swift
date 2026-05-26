@@ -307,6 +307,10 @@ extension PlayerView {
         setProp("player.introsOutrosIndex", value: introsOutrosIndex)
     }
     
+    public func setOutroPlaybackMode(_ outroPlaybackMode: String) {
+        setProp("player.outroPlaybackMode", value: outroPlaybackMode)
+    }
+    
     public func setAdverts(_ adverts: [PlayerSettings.Advert]) {
         setProp("player.adverts", value: adverts)
     }
