@@ -33,6 +33,7 @@ public struct PlayerSettings: Codable {
     public var introsOutros: [IntroOutro]? = nil
     public var introsOutrosIndex: Int? = nil
     public var outroPlaybackMode: String? = nil
+    public var playerLanguage: String? = nil
     public var adverts: [Advert]? = nil
     public var advertIndex: Int? = nil
     public var minDurationForMidroll: Float? = nil

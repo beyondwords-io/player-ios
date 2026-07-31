@@ -311,6 +311,10 @@ extension PlayerView {
         setProp("player.outroPlaybackMode", value: outroPlaybackMode)
     }
     
+    public func setPlayerLanguage(_ playerLanguage: String) {
+        setProp("player.playerLanguage", value: playerLanguage)
+    }
+    
     public func setAdverts(_ adverts: [PlayerSettings.Advert]) {
         setProp("player.adverts", value: adverts)
     }
